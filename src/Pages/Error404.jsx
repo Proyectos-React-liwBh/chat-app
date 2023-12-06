@@ -15,7 +15,7 @@ const Error404 = () => {
         </p>
       </div>
 
-      <div className="py-2 d-flex justify-content-center align-content-center">
+      <div className="py-2 pb-5 d-flex justify-content-center align-content-center">
         <Link className="error" to="/">
           Ir a inicio
           <span className="star">•</span>
