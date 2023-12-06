@@ -8,15 +8,15 @@ from 'mdb-react-ui-kit';
 import logo from "../assets/Image/logo.png";
 const Login = () => {
     return (
-      <div className='gradient-custom-2 vh-100'>
+      <div className='gradient-custom-2 min-vh-100 d-flex align-items-center justify-content-center'>
 
       
-      <MDBContainer className=" d-flex align-items-center  gradient-form">
+      <div className="  gradient-form">
   
-        <MDBRow>
+        <div className='row d-flex py-5 justify-content-center'>
   
-          <MDBCol col='6' className="mb-5  shadow-sm border-top bg-white">
-            <div className="d-flex flex-column ms-5 rounded-3">
+          <div  className=" shadow-sm border-top bg-white col-10 col-md-6 col-sm-8 col-lg-4">
+            <div className="d-flex flex-column justify-content-center   rounded-3">
   
               <div className="text-center mt-4">
               <img src={logo} alt="Chat App Logo" draggable="false" height={80} width={80} />
@@ -31,7 +31,7 @@ const Login = () => {
               <MDBInput wrapperClass='mb-4' label='Contraseña' id='form2' type='password'/>
   
   
-              <div className="text-center pt-1 mb-5 pb-1">
+              <div className="text-center ">
                 <button className="text-white mb-4 w-100 p-2 rounded gradient-custom-2 hover">Iniciar sesión</button>
                 <a className="text-muted" href="#!">Olvido su contraseña?</a>
               </div>
@@ -45,10 +45,10 @@ const Login = () => {
   
             </div>
   
-          </MDBCol>
+          </div>
   
-          <MDBCol col='6' className="mb-5 rounded-3 px-0 ">
-            <div className="d-flex flex-column  justify-content-center bg-white h-100 mb-4 bg-imagen">
+          <div  className=" rounded-3 px-0 d-none d-md-block col-6 col-lg-4">
+            <div className="d-flex flex-column  justify-content-center bg-white h-100  bg-imagen">
   
               <div className="texto text-white px-3 py-4 p-md-5 mx-md-4">
 
@@ -59,11 +59,11 @@ const Login = () => {
   
             </div>
   
-          </MDBCol>
+          </div>
   
-        </MDBRow>
+        </div>
   
-      </MDBContainer>
+      </div>
       </div>
     );
   }
