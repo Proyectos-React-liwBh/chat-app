@@ -241,3 +241,60 @@ footer {
   top: 0;
   left: 25px;
 }
+
+/* 
+!#####################################################################
+?Perfil
+!#####################################################################
+*/
+
+.avatar{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
+
+
+/* 
+!#####################################################################
+?Login
+!#####################################################################
+*/
+.gradient-custom-2 {
+  background: #000000;
+  background-image: url("../../assets/Image/patron.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}
+@media (min-width: 769px) {
+  .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+  }
+}
+.bg-imagen{
+  background-image: url("../../assets/Image/fondo-login2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.texto{
+  /hacereltextoconefectodevidriotransparente/color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
