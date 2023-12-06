@@ -94,7 +94,7 @@ const Navbar = () => {
                 </ul>
               </div>
 
-              <li className="nav-item dropdown ms-3">
+              <li className="nav-item dropdown ms-1">
               <div
                 className="nav-link dropdown-toggle"
                 id="navbarDropdown"
@@ -102,10 +102,10 @@ const Navbar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <FaGear className="text-white fs-3 mx-2" />
+                <FaGear className="text-white fs-4 mx-2" />
                 </div>
                 <ul
-                className="dropdown-menu dropdown-menu-end"
+                className="dropdown-menu dropdown-menu-start"
                 aria-labelledby="navbarDropdown"
               >
                 {localStorage.getItem("usuario") ? (
