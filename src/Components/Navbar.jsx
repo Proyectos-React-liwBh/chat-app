@@ -1,8 +1,36 @@
 import logo from "../assets/Image/logo.png";
+import { useEffect } from "react";
 import { FaGear, FaBell } from "react-icons/fa6";
 import { TiThMenu } from "react-icons/ti";
+import { Link } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
 
+import { BiLogInCircle, BiLogOutCircle } from "react-icons/bi";
 const Navbar = () => {
+  /* const dispatch = useDispatch(); */
+  /* const navigate = useNavigate();
+
+  const { message, errorRedux } = useSelector((state) => state.usuario);
+
+  const cerrarSesionUsuario = () => {
+    console.log("cerrar sesion");
+    dispatch(cerrarSesion());
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
+  };
+
+  useEffect(() => {
+    if (message) {
+      SweetAlertSuccess(message);
+      dispatch(limpiarAlertas());
+    }
+    if (errorRedux) {
+      SweetAlertError(errorRedux);
+      dispatch(limpiarAlertas());
+    }
+    // eslint-disable-next-line
+  }, [message, errorRedux]); */
   return (
     <div>
       <nav className="navbar navbar-expand-lg fixed-top bg-dark navbar-dark">
@@ -66,8 +94,56 @@ const Navbar = () => {
                 </ul>
               </div>
 
-              <li className="nav-item ms-3">
+              <li className="nav-item dropdown ms-3">
+              <div
+                className="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <FaGear className="text-white fs-3 mx-2" />
+                </div>
+                <ul
+                className="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                {localStorage.getItem("usuario") ? (
+                  <>
+                    <li className="dropdown-item">
+                      <Link
+                        className="d-flex align-items-center text-decoration-none text-dark"
+                        to="/perfil"
+                      >
+                        <FaUser />
+                        <span className="ms-2">Perfil</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li className="dropdown-item ">
+                      <div
+                        className="d-flex align-items-center"
+                        /* onClick={cerrarSesionUsuario} */
+                      >
+                        <BiLogOutCircle />
+                        <span className="ms-2">Cerrar Sesión</span>
+                      </div>
+                    </li>
+                  </>
+                ) : (
+                  <li className="dropdown-item ">
+                    <Link
+                      className="d-flex align-items-center text-decoration-none text-dark"
+                      to="/login"
+                    >
+                      <BiLogInCircle />
+                      <span className="ms-2">Login</span>
+                    </Link>
+                  </li>
+                )}
+              </ul>
               </li>
             </ul>
           </div>

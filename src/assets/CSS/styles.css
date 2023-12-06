@@ -95,3 +95,93 @@ footer {
       transform: rotate(405deg);
     }
   }
+/* 
+!#####################################################################
+?Page 404
+!#####################################################################
+*/
+
+.background-page404 {
+  padding: 0;
+  margin: 0;
+  background: #f0f0f0;
+}
+.img-page404 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btn1 {
+  text-align: center;
+}
+.text {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 40px;
+}
+.error-text {
+  text-align: center;
+  padding: 20px;
+  font-family: Cursive;
+}
+
+.error {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  text-decoration: none;
+  padding: 10px 50px;
+  background: #064d6a;
+  color: #fff;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease-in-out; /* Agregado para una transición suave */
+}
+
+.error:hover {
+  background: #053448;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+/* Estilos para las estrellas */
+.star {
+  position: absolute;
+  color: #baabab;
+  opacity: 0;
+  font-size: 1rem; /* Ajusta según tus preferencias */
+  transition: opacity 0.3s ease-in-out; /* Agregado para una transición suave */
+}
+
+.error:hover .star {
+  opacity: 1;
+}
+
+.star:nth-child(1) {
+  top: 50%;
+  left: 20%;
+}
+
+.star:nth-child(2) {
+  top: 10%;
+  left: 10%;
+}
+
+.star:nth-child(3) {
+  top: 40%;
+  left: 90%;
+}
+
+.star:nth-child(4) {
+  top: 70%;
+  left: 40%;
+}
+
+.star:nth-child(5) {
+  top: 10%;
+  left: 90%;
+}
+
+.star:nth-child(5) {
+  top: 5%;
+  left: 50%;
+}
