@@ -1,9 +1,11 @@
+//import { useEffect } from "react";
 import logo from "../assets/Image/logo.png";
-import { useEffect } from "react";
 import { FaGear, FaBell } from "react-icons/fa6";
+import CardNotification from "../Pages/Card/CardNotification";
 import { TiThMenu } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import { MdOutlineRoomPreferences } from "react-icons/md";
 
 import { BiLogInCircle, BiLogOutCircle } from "react-icons/bi";
 const Navbar = () => {
@@ -35,115 +37,132 @@ const Navbar = () => {
     <div>
       <nav className="navbar navbar-expand-lg fixed-top bg-dark navbar-dark">
         <div className="container">
-          <a className="navbar-brand d-flex justify-content-center align-content-center" href="#">
-            <img src={logo} alt="Chat App Logo" draggable="false" height={40} />
-            <h3 className="d-none d-md-inline-block ms-3">ChatApp</h3>
-          </a>
+          <Link className="navbar-brand" to="/">
+            <div className="d-flex justify-content-center align-content-center">
+              <img
+                src={logo}
+                alt="Chat App Logo"
+                draggable="false"
+                height={40}
+              />
+              <h3 className="d-none d-md-inline-block ms-3">ChatApp</h3>
+            </div>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
-            data-mdb-toggle="collapse"
-            data-mdb-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <TiThMenu className="fs-3 text-white"/>
+            <TiThMenu className="fs-3 text-white" />
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto align-items-center">
+          <div className="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul className="navbar-nav ms-md-auto">
               <li className="nav-item">
-                <a className="nav-link mx-2" href="#!">
-                  <i className="fas fa-plus-circle pe-2" />
-                  Mis Salas
-                </a>
+                <Link className="nav-link mx-md-2" to="/rooms">
+                  <div className="d-flex align-items-center">
+                    <MdOutlineRoomPreferences className="text-secondary fs-3 me-2" />
+                    <span className="fs-5 text-start">Mis Salas</span>
+                  </div>
+                </Link>
               </li>
               {/* Notifications */}
-              <div className="dropdown">
+              <li className="nav-item dropdown mx-md-2">
                 <div
-                  data-mdb-dropdown-init
-                  className="text-reset me-3 dropdown-toggle hidden-arrow"
-                  id="navbarDropdownMenuLink"
+                  className="nav-link dropdown-toggle"
+                  id="notificationDropdown"
                   role="button"
+                  data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <FaBell className="text-white"/>
-                  <span className="badge rounded-pill badge-notification bg-danger">
-                    1
+                  <FaBell className="text-white fs-4 bell-container" />
+                  {/* Counter - Notificación */}
+                  <span className="badge bell-counter rounded-pill badge-notification bg-danger">
+                    0
                   </span>
                 </div>
-                <ul
-                  className="dropdown-menu dropdown-menu-end"
-                  aria-labelledby="navbarDropdownMenuLink"
+                {/* Dropdown - Notificación  */}
+                <div
+                  className="dropdown-menu dropdown-menu-end bg-dark bg-gradient"
+                  aria-labelledby="notificationDropdown"
                 >
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Some news
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another news
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                  <h6 className="text-center text-white">
+                    Notificaciones Activas
+                  </h6>
+                  <hr className="dropdown-divider bg-white" />
+                  <ul
+                    className="list-unstyled"
+                    style={{ maxHeight: "240px", overflow: "auto" }}
+                  >
+                    <CardNotification />
+                    <CardNotification />
+                    <CardNotification />
+                  </ul>
+                  {/* <!-- Enlace a pagina de Notificación --> */}
+                  <hr className="dropdown-divider bg-white" />
+                  <Link
+                    to={"/notifications"}
+                    className="dropdown-item text-center small text-white"
+                  >
+                    Mostrar todas las Notificaciones
+                  </Link>
+                </div>
+              </li>
 
-              <li className="nav-item dropdown ms-1">
-              <div
-                className="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <FaGear className="text-white fs-4 mx-2" />
+              {/* profile */}
+              <li className="nav-item dropdown mx-md-2">
+                <div
+                  className="nav-link dropdown-toggle"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <FaGear className="text-white fs-4 " />
                 </div>
                 <ul
-                className="dropdown-menu dropdown-menu-start"
-                aria-labelledby="navbarDropdown"
-              >
-                {localStorage.getItem("usuario") ? (
-                  <>
-                    <li className="dropdown-item">
+                  className="dropdown-menu dropdown-menu-end bg-dark bg-gradient text-white list-unstyled"
+                  aria-labelledby="profileDropdown"
+                >
+                  {localStorage.getItem("usuario") ? (
+                    <>
+                      <li className="m-2 hover-dark">
+                        <Link
+                          className="d-flex align-items-center text-decoration-none text-white"
+                          to="/perfil"
+                        >
+                          <FaUser />
+                          <span className="ms-2">Perfil</span>
+                        </Link>
+                      </li>
+
+                      <hr className="dropdown-divider bg-white" />
+
+                      <li className="m-2 hover-dark">
+                        <div
+                          className="d-flex align-items-center text-white cursor-pointer"
+                          /* onClick={cerrarSesionUsuario} */
+                        >
+                          <BiLogOutCircle />
+                          <span className="ms-2">Cerrar Sesión</span>
+                        </div>
+                      </li>
+                    </>
+                  ) : (
+                    <li className="m-2 hover-dark">
                       <Link
-                        className="d-flex align-items-center text-decoration-none text-dark"
-                        to="/perfil"
+                        className="d-flex align-items-center text-decoration-none text-white"
+                        to="/login"
                       >
-                        <FaUser />
-                        <span className="ms-2">Perfil</span>
+                        <BiLogInCircle />
+                        <span className="ms-2">Login</span>
                       </Link>
                     </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li className="dropdown-item ">
-                      <div
-                        className="d-flex align-items-center"
-                        /* onClick={cerrarSesionUsuario} */
-                      >
-                        <BiLogOutCircle />
-                        <span className="ms-2">Cerrar Sesión</span>
-                      </div>
-                    </li>
-                  </>
-                ) : (
-                  <li className="dropdown-item ">
-                    <Link
-                      className="d-flex align-items-center text-decoration-none text-dark"
-                      to="/login"
-                    >
-                      <BiLogInCircle />
-                      <span className="ms-2">Login</span>
-                    </Link>
-                  </li>
-                )}
-              </ul>
+                  )}
+                </ul>
               </li>
             </ul>
           </div>

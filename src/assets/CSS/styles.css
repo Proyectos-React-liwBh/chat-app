@@ -10,6 +10,15 @@ footer {
   width: 100%; /* Ajusta el color de fondo según tu diseño */
   padding: 10px;
 }
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.hover-dark:hover{
+  background-color: #212529;
+  padding: 3px;
+}
+
 /* 
 !#####################################################################
 ?Spinner
@@ -215,3 +224,20 @@ footer {
   background-image: linear-gradient(to bottom, #072757, #f0f0f0);
 }
 
+/* 
+!#####################################################################
+?Notificaciones
+!#####################################################################
+*/
+.bell-container{
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.bell-counter{
+  position: absolute;
+  top: 0;
+  left: 25px;
+}
