@@ -1,8 +1,8 @@
-body {
+.layout {
   position: relative;
   min-height: 100vh;
   margin: 0;
-  padding-bottom: 50px; /* Ajusta según la altura de tu pie de página */
+  padding-bottom: 50px; 
 }
 footer {
   position: absolute;
@@ -106,11 +106,21 @@ footer {
   margin: 0;
   background: #f0f0f0;
 }
+
 .img-page404 {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
+
+@media (min-width: 768px) {
+  .img-page404 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+  
 .btn1 {
   text-align: center;
 }

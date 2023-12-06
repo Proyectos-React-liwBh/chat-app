@@ -4,7 +4,7 @@ import img from "../assets/Image/page404.gif";
 
 const Error404 = () => {
   return (
-    <div className="background-page404 min-vh-100">
+    <div className="background-page404 d-flex flex-column min-vh-100">
       <img className="img-page404" src={img} alt="Pagina 404" />
       <div className="py-2">
         <h1 className="error-text">
