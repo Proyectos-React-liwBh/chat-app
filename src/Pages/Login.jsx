@@ -50,7 +50,7 @@ const Login = () => {
           <MDBCol col='6' className="mb-5 rounded-3 px-0 ">
             <div className="d-flex flex-column  justify-content-center bg-white h-100 mb-4 bg-imagen">
   
-              <div className="texto px-3 py-4 p-md-5 mx-md-4">
+              <div className="texto text-white px-3 py-4 p-md-5 mx-md-4">
 
                 <h4 className="mb-4">Chatea con Pasión: Encuentra Tu Comunidad</h4>
                 <p className="small mb-0">Conéctate con personas apasionadas en nuestra aplicación de chat por salas. Descubre y comparte tus intereses en un espacio diseñado para conversaciones auténticas. ¡Encuentra tu comunidad hoy!.
