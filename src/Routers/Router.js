@@ -7,6 +7,7 @@ import Error404 from "../Pages/Error404";
 import Rooms from "../Pages/Rooms/Rooms";
 import Room from "../Pages/Room/Room";
 import Profile from "../Pages/Profile/Profile";
+import Forgot from "../Pages/forgot";
 
 //rutas
 export const routerApp = [
@@ -32,6 +33,10 @@ export const routerApp = [
     {
         path: "/register",
         component: Register,
+    },
+    {
+        path: "/forgot-password",
+        component: Forgot,
     },
     {
         path:"*",

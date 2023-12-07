@@ -514,3 +514,40 @@ input[type="text"] {
   padding: 1rem;
   border-radius: 0.5rem;
 }
+
+/*
+!#####################################################################
+?Register
+!#####################################################################
+*/
+.bg-register {
+  background: #000000;
+  background-image: url("../../assets/Image/patron.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+/*
+!#####################################################################
+?Forgot
+!#####################################################################
+*/
+.bg-forgot {
+  background: #000000;
+  background-image: url("../../assets/Image/patron.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+/*
+!#####################################################################
+?Recovery
+!#####################################################################
+*/
+.bg-recovery {
+  background: #000000;
+  background-image: url("../../assets/Image/patron.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

@@ -1,9 +1,10 @@
 
-
 const Recovery = () => {
   return (
-    <div>Recovery</div>
-  )
-}
+    <div>
+      <h1>Recovery</h1>
+    </div>
+  );
+};
 
-export default Recovery
+export default Recovery;

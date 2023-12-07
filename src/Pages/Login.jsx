@@ -62,9 +62,10 @@ const Login = () => {
                   draggable="false"
                   height={80}
                   width={80}
+                  className="rounded"
                 />
 
-                <h4 className="mt-1 mb-5 pb-1">Chat App</h4>
+                <h4 className="mt-1 mb-5 pb-1">Chat Space</h4>
               </div>
 
               <h2 className="text-center text-primary">
@@ -130,7 +131,7 @@ const Login = () => {
                   <Link className="text-muted mx-2" to={"/register"}>
                     No tienes cuenta?
                   </Link>
-                  <Link className="text-muted " to={""}>
+                  <Link className="text-muted " to={"/forgot-password"}>
                     Olvido su contraseña?
                   </Link>
                 </div>
