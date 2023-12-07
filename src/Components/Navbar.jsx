@@ -45,7 +45,7 @@ const Navbar = () => {
                 draggable="false"
                 height={40}
               />
-              <h3 className="d-none d-md-inline-block ms-3">ChatApp</h3>
+              <h3 className="d-none d-md-inline-block ms-3">ChatSpace</h3>
             </div>
           </Link>
           <button

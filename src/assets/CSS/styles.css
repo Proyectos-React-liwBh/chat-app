@@ -427,7 +427,7 @@ input[type="text"] {
 }
 
 .error_form-container {
-  text-align: center; /* Centrar horizontalmente */
+  text-align: center; 
 }
 
 /*
@@ -445,8 +445,7 @@ input[type="text"] {
 
 .search__input {
   width: 90%;
-  padding: 1rem;
-  border-radius: 0.5rem;
+  padding: 0.6rem;
   border: 1px solid #ccc;
   outline: none;
   box-sizing: border-box;
@@ -465,7 +464,7 @@ input[type="text"] {
 }
 
 .search__input:focus {
-  border: 2px solid;
+  border: 3px solid;
   border-image: linear-gradient(160deg,  #28d9b3 0%, #3498db 100%);
   border-image-slice: 1;
 }
@@ -474,4 +473,44 @@ input[type="text"] {
   color: #28d9b3;
   font-size: 1.3rem;
   transition: all 0.3s ease;
+}
+/*
+!#####################################################################
+?Home
+!#####################################################################
+*/
+.container__header_home {
+  max-height: 25rem;
+  background: #000;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.content__header_home {
+  position: relative;
+  height: 25rem;
+}
+
+.image__header_home{
+  background-image: url("../../assets/Image/patron2.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
+  filter: brightness(1.1) contrast(1.1);
+}
+
+.title__header_home {
+  position: absolute;
+  bottom: -3%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
