@@ -539,6 +539,87 @@ input[type="text"] {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+.asteroid {
+  height: 100px;
+  width: 100px;
+  position: relative;
+}
+
+/* Primer asteroide */
+.asteroid.first {
+  animation: move-asteroid-1 40s linear infinite;
+}
+
+/* Segundo asteroide */
+.asteroid.second {
+  animation: move-asteroid-2 60s linear infinite reverse;
+}
+
+/* Tercer asteroide */
+.asteroid.third {
+  animation: move-asteroid-3 80s linear infinite;
+}
+
+
+@keyframes move-asteroid-1 {
+  0% {
+    transform: translate(20vw, 100vh);
+  }
+  25% {
+    transform: translate(100vw, -10vh);
+  }
+  50% {
+    transform: translate(120vw, -30vh);
+  }
+  75% {
+    transform: translate(-50vw, -50vh);
+  }
+  100% {
+    transform: translate(20vw, -70vh);
+  }
+}
+
+@keyframes move-asteroid-2 {
+  0% {
+    transform: translate(-10vw, 70vh);
+  }
+  25% {
+    transform: translate(70vw, -40vh);
+  }
+  50% {
+    transform: translate(-40vw, 100vh);
+  }
+  75% {
+    transform: translate(100vw, 0);
+  }
+  100% {
+    transform: translate(-10vw, -20vh);
+  }
+}
+
+@keyframes move-asteroid-3 {
+  0% {
+    transform: translate(0vw, -20vh);
+  }
+  25% {
+    transform: translate(-60vw, 10vh);
+  }
+  50% {
+    transform: translate(100vw, 30vh);
+  }
+  75% {
+    transform: translate(-70vw, 50vh);
+  }
+  100% {
+    transform: translate(30vw, 70vh);
+  }
+} 
+
+
+
+
+
 /*
 !#####################################################################
 ?Recovery
