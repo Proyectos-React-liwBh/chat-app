@@ -264,7 +264,7 @@ footer {
 */
 
 .bg-profile {
-  background-color: #74ebd5;
+  background-color: #222f63;
   background-image: url("../../assets/Image/patron.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -410,9 +410,10 @@ input[type="text"] {
   transition: color 0.7s;
 }
 
-/* ---------------------------------------------------- */
-/* Error formulario */
-/* ---------------------------------------------------- */
+/*
+!#####################################################################
+ ?Error formulario 
+!##################################################################### */
 .error_form {
   display: inline-block;
   cursor: pointer;
@@ -427,4 +428,50 @@ input[type="text"] {
 
 .error_form-container {
   text-align: center; /* Centrar horizontalmente */
+}
+
+/*
+!#####################################################################
+?Buscador
+!#####################################################################
+*/
+
+.search__container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.search__input {
+  width: 90%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  outline: none;
+  box-sizing: border-box;
+  padding-right: 2.5rem !important;
+  font-size: 1rem;
+  transition: border-image 0.3s ease;
+}
+
+.search__icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: #85929e;
+}
+
+.search__input:focus {
+  border: 2px solid;
+  border-image: linear-gradient(160deg,  #28d9b3 0%, #3498db 100%);
+  border-image-slice: 1;
+}
+
+.search__input:focus + .search__icon {
+  color: #28d9b3;
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
 }
