@@ -63,7 +63,7 @@ const Register = () => {
   return (
     <div className=" min-vh-100 bg-register d-flex align-items-center justify-content-center">
       <div className="  gradient-form w-100">
-        <div className="row m-0 d-flex py-5 justify-content-center">
+        <div className="row m-0 d-flex py-md-2 py-lg-2 justify-content-center">
           <div className=" shadow-sm border-top bg-white col-10 col-md-6 col-sm-8 col-lg-4">
             <div className="d-flex flex-column justify-content-center   rounded-3">
               <div className="text-center mt-4">
