@@ -71,6 +71,9 @@ const Login = () => {
               <h2 className="text-center text-primary">
                 Inicia sesión con tu cuenta
               </h2>
+              <form action="">
+
+              
 
               <div className="">
                 <div className="efecto my-3 d-flex align-items-center justify-content-center ">
@@ -145,7 +148,9 @@ const Login = () => {
                   Inicio
                 </Link>
               </div>
+              </form>
             </div>
+            
           </div>
 
           <div className=" rounded-3 px-0 d-none d-md-block col-6 col-lg-4">
