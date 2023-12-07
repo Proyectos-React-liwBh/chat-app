@@ -7,7 +7,9 @@ import * as Yup from "yup";
 import * as Exp from "../assets/ExpresionesRegulares/Expresiones";
 import { Link } from "react-router-dom";
 import ErrorForm from "../Components//ErrorForm";
+
 const Login = () => {
+
 
   const formik = useFormik({
     initialValues: {
@@ -15,7 +17,7 @@ const Login = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string()
+      password: Yup.string()
         .min(8, "La contraseña debe tener al menos 8 caracteres")
         .max(16, "La contraseña debe tener menos de 16 caracteres")
         .required("La contraseña es requerida")
@@ -23,13 +25,13 @@ const Login = () => {
           Exp.passwordRegex,
           "La contraseña debe tener al menos menos una Mayúscula, una Minúscula y un Número."
         ),
-        password: Yup.string()
+      email: Yup.string()
         .min(10, "El correo debe tener al menos 10 caracteres")
         .max(50, "El correo debe tener menos de 50 caracteres")
         .required("El correo es requerido")
         .matches(Exp.emailRegex, "Debe ingresar un correo valido."),
     }),
-    onSubmit: (values, {resetForm}) => {
+    onSubmit: (values, { resetForm }) => {
       /* console.log(values);
           alert(JSON.stringify(values, null, 2)); */
 
@@ -70,56 +72,52 @@ const Login = () => {
               </h2>
 
               <div className="">
-                <div className="efecto my-3 d-flex align-items-center justify-content-center "> 
-                <MdOutlineEmail className=" mx-2" />
-                <input
-                  className="effect-1"
-                  type="email"
-                  placeholder="Correo electronico"
-                  id="email"
-                  name="email"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  autoComplete="off"
-                />
+                <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                  <MdOutlineEmail className={`mx-2  icon`} />
+                  <input
+                    className="effect-1"
+                    type="email"
+                    placeholder="Correo electronico"
+                    id="email"
+                    name="email"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                    autoComplete="off"
+                  />
+
+                  <span className="focus-border"></span>
                 </div>
-                
-                
-                <span className="focus-border"></span>
-                {formik.touched.email &&
-                      formik.errors.email && (
-                        <div className="error_form-container row">
-                          <ErrorForm message={formik.errors.email} />
-                        </div>
-                      )}
+
+                {formik.touched.email && formik.errors.email && (
+                  <div className="error_form-container row">
+                    <ErrorForm message={formik.errors.email} />
+                  </div>
+                )}
               </div>
 
-              <div className="efecto ">
-              <div className="my-3 d-flex align-items-center justify-content-center "> 
-              <CgPassword className=" mx-2 icon" />
-                <input
-                  className="effect-1 "
-                  type="password"
-                  placeholder="Contraseña"
-                  id="password"
-                  name="password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                  autoComplete="off"
-                />
+              <div className="">
+                <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                  <CgPassword className=" mx-2 icon" />
+                  <input
+                    className="effect-1 "
+                    type="password"
+                    placeholder="Contraseña"
+                    id="password"
+                    name="password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    autoComplete="off"
+                  />
+                  <span className="focus-border"></span>
                 </div>
-                
-                {formik.touched.password &&
-                      formik.errors.password && (
-                        <div className="error_form-container">
-                          <ErrorForm
-                            message={formik.errors.password}
-                          />
-                        </div>
-                      )}
-                <span className="focus-border"></span>
+
+                {formik.touched.password && formik.errors.password && (
+                  <div className="error_form-container">
+                    <ErrorForm message={formik.errors.password} />
+                  </div>
+                )}
               </div>
 
               <div className="text-center  w-50 m-auto pt-3">
@@ -131,14 +129,17 @@ const Login = () => {
                 <div className="d-flex col justify-content-center mb-3">
                   <Link className="text-muted mx-2" to={"/register"}>
                     No tienes cuenta?
-                    </Link>
+                  </Link>
                   <Link className="text-muted " to={""}>
                     Olvido su contraseña?
                   </Link>
                 </div>
               </div>
               <div className="d-flex flex-row align-items-center justify-content-center pb-3 mb-4">
-                <Link to={"/"} className="mx-2 btn btn-outline-primary d-flex align-items-center">
+                <Link
+                  to={"/"}
+                  className="mx-2 btn btn-outline-primary d-flex align-items-center"
+                >
                   <FaHome className="mx-1  " />
                   Inicio
                 </Link>

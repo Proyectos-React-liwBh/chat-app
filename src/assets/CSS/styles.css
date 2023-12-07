@@ -272,33 +272,6 @@ footer {
 }
 
 /* 
-!#####################################################################
-?Login
-!#####################################################################
-*/
-.gradient-custom-2 {
-  background: #000000;
-  background-image: url("../../assets/Image/patron.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.bg-imagen {
-  background-image: url("../../assets/Image/fondo-login2.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.texto {
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
-}
 
 /* 
 !#####################################################################
@@ -391,7 +364,9 @@ input[type="text"] {
   width: 80%;
   position: relative; /* Agrega esta línea */
 }
-
+.focused {
+  color: #3399ff;
+}
 .effect-1 ~ .focus-border {
   position: absolute;
   bottom: 0;
@@ -416,6 +391,15 @@ input[type="text"] {
   -moz-transition: 0.7s;
   -ms-transition: 0.7s;
   -o-transition: 0.7s;
+}
+.efecto:focus-within .icon,
+.efecto input:focus + .icon {
+  color: #3399ff;
+  transition: color 0.7s;
+}
+
+.icon {
+  transition: color 0.7s;
 }
 
 /* ---------------------------------------------------- */
