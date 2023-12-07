@@ -17,16 +17,17 @@ const Rooms = () => {
   const roomsMember = [
     {
       id: 1,
-      name: "Programación en Python",
-      description: "Grupo para aprender python",
+      name: "Programación en C#",
+      description: "Grupo para aprender C#",
       image: "https://picsum.photos/200",
     },
   ];
 
   return (
+    <div className="bg-rooms">
     <Layout>
       <section className="py-3">
-        <h2 className="text-muted">Salas Creadas</h2>
+        <h2 className="text-white">Salas Creadas</h2>
 
         {rooms.length === 0 ? (
           <div className="text-muted py-5">
@@ -39,9 +40,9 @@ const Rooms = () => {
           </div>
         )}
       </section>
-      <hr />
+      <hr className="bg-white text-white"/>
       <section className="py-3">
-        <h2 className="text-muted">Salas Miembro</h2>
+        <h2 className="text-white">Salas Miembro</h2>
 
         {roomsMember.length === 0 ? (
           <div className="text-muted py-5">
@@ -55,6 +56,7 @@ const Rooms = () => {
         )}
       </section>
     </Layout>
+    </div>
   );
 };
 

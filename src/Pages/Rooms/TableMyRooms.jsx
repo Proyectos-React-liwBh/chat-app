@@ -44,8 +44,6 @@ const TableMyRooms = ({ rooms }) => {
   return (
     <div className="py-3">
       <MaterialReactTable
-        //enableColumnOrdering//modificar el orden de las columnas
-        //enableHiding={false} //boton de ocultar columnas
         enableFullScreenToggle={false} //boton de pantalla completa
         enableDensityToggle={false} //boton para cambiar la densidad de la tabla
         columns={columns} //nombres de columnas
@@ -56,8 +54,6 @@ const TableMyRooms = ({ rooms }) => {
         options={{
           exportButton: true,
         }}
-        //enableRowSelection//habilita el checkbox de seleccionar
-        //enableSelectAll={false}//habilita el checkbox de seleccionar todos
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
             <Tooltip arrow placement="left" title="Editar">

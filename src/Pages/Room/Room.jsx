@@ -1,8 +1,10 @@
-
+import Layout from "../../Components/Layout"
 
 const Room = () => {
   return (
-    <div>Room</div>
+    <Layout>
+      <h2>Room</h2>
+    </Layout>
   )
 }
 
