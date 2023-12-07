@@ -1,11 +1,14 @@
 import { useEffect, useState, useMemo } from "react";
-import { FaPlus } from "react-icons/fa";
 import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from "material-react-table/locales/es";
 import { Box, IconButton, Tooltip } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
+import { FaEye } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-const TableMyRooms = ({ rooms }) => {
+const TableFolowRooms = ({ rooms }) => {
+  const navigate = useNavigate();
+
   const limitDescription = (description) => {
     if (description.length > 50) {
       return (
@@ -37,8 +40,9 @@ const TableMyRooms = ({ rooms }) => {
     console.log(row);
   };
 
-  const handleEdit = (row) => {
+  const handleGo = (row) => {
     console.log(row);
+    navigate(`/room/${row.id}`);
   };
 
   return (
@@ -60,18 +64,15 @@ const TableMyRooms = ({ rooms }) => {
         //enableSelectAll={false}//habilita el checkbox de seleccionar todos
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
-            <Tooltip arrow placement="left" title="Editar">
+            <Tooltip arrow placement="left" title="Entrar a sala">
               <IconButton
-                style={{ color: "#FFC107" }}
-                id="btnModalEditRoom"
-                data-bs-toggle="modal"
-                data-bs-target="#ModalEditRoom"
-                onClick={() => handleEdit(row.original)}
+                style={{ color: "#276D7A" }}
+                onClick={() => handleGo(row.original)}
               >
-                <Edit />
+                <FaEye />
               </IconButton>
             </Tooltip>
-            <Tooltip arrow placement="right" title="Eliminar">
+            <Tooltip arrow placement="right" title="Dejar Sala">
               <IconButton
                 color="error"
                 onClick={() => handleDelete(row.original)}
@@ -81,31 +82,9 @@ const TableMyRooms = ({ rooms }) => {
             </Tooltip>
           </Box>
         )}
-        renderTopToolbarCustomActions={() => (
-          <Box
-            sx={{
-              display: "flex",
-              gap: "1rem",
-              p: "0.5rem",
-              flexWrap: "wrap",
-            }}
-          >
-            <Tooltip arrow placement="right" title="Nueva Sala">
-              <IconButton
-                size="small"
-                color="success"
-                id="btnModalNewRoom"
-                data-bs-toggle="modal"
-                data-bs-target="#ModalNewRoom"
-              >
-                <FaPlus />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        )}
       />
     </div>
   );
 };
 
-export default TableMyRooms;
+export default TableFolowRooms;
