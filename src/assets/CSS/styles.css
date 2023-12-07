@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100vh;
   margin: 0;
-  padding-bottom: 50px; 
+  padding-bottom: 50px;
 }
 footer {
   position: absolute;
@@ -10,11 +10,11 @@ footer {
   width: 100%; /* Ajusta el color de fondo según tu diseño */
   padding: 10px;
 }
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
-.hover-dark:hover{
+.hover-dark:hover {
   background-color: #212529;
   padding: 3px;
 }
@@ -27,83 +27,83 @@ footer {
 
 /* Loading */
 .loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150px;
-    height: 150px;
-    background: transparent;
-    border: 3px solid rgba(0, 102, 255, 0.1);
-    border-radius: 50%;
-    text-align: center;
-    line-height: 150px;
-    font-family: sans-serif;
-    font-size: 20px;
-    color: #0066ff;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px #0066ff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  background: transparent;
+  border: 3px solid rgba(0, 102, 255, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 150px;
+  font-family: sans-serif;
+  font-size: 20px;
+  color: #0066ff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px #0066ff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-top: 3px solid #0066ff;
+  border-right: 3px solid #0066ff;
+  border-radius: 50%;
+  animation: animateC 2s linear infinite;
+}
+
+.loader span {
+  display: block;
+  position: absolute;
+  top: calc(50% - 2px);
+  left: 50%;
+  width: 50%;
+  height: 4px;
+  background: transparent;
+  transform-origin: left;
+  animation: animate 2s linear infinite;
+}
+
+.loader span::before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #00aeff;
+  top: -6px;
+  right: -8px;
+  box-shadow: 0 0 20px 5px #0066ff;
+}
+
+@keyframes animateC {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .loader::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    width: 100%;
-    height: 100%;
-    border: 3px solid transparent;
-    border-top: 3px solid #0066ff;
-    border-right: 3px solid #0066ff;
-    border-radius: 50%;
-    animation: animateC 2s linear infinite;
+
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .loader span {
-    display: block;
-    position: absolute;
-    top: calc(50% - 2px);
-    left: 50%;
-    width: 50%;
-    height: 4px;
-    background: transparent;
-    transform-origin: left;
-    animation: animate 2s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(45deg);
   }
-  
-  .loader span::before {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #00aeff;
-    top: -6px;
-    right: -8px;
-    box-shadow: 0 0 20px 5px #0066ff;
+
+  100% {
+    transform: rotate(405deg);
   }
-  
-  @keyframes animateC {
-    0% {
-      transform: rotate(0deg);
-    }
-  
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @keyframes animate {
-    0% {
-      transform: rotate(45deg);
-    }
-  
-    100% {
-      transform: rotate(405deg);
-    }
-  }
+}
 /* 
 !#####################################################################
 ?Page 404
@@ -229,17 +229,32 @@ footer {
 ?Notificaciones
 !#####################################################################
 */
-.bell-container{
+.bell-container {
   position: relative;
   display: inline-block;
   margin-right: 10px;
   cursor: pointer;
 }
 
-.bell-counter{
+.bell-counter {
   position: absolute;
   top: 0;
   left: 25px;
+}
+
+.bg-card-notifications {
+  background-color: rgb(60, 183, 255);
+  background-image: linear-gradient(
+    225deg,
+    #3c63ff 0%,
+    #4c4ba0 50%,
+    #020e17 100%
+  );
+}
+
+.bg-card-notifications:hover {
+  background-color: #21d4fd;
+  background-image: linear-gradient(19deg, #21d4fd 0%, #b721ff 100%);
 }
 
 /* 
@@ -248,15 +263,13 @@ footer {
 !#####################################################################
 */
 
-.avatar{
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto;
-  display: block;
+.bg-profile {
+  background-color: #74ebd5;
+  background-image: url("../../assets/Image/patron.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
-
 
 /* 
 !#####################################################################
@@ -271,19 +284,155 @@ footer {
   background-position: center center;
 }
 
-
-.bg-imagen{
+.bg-imagen {
   background-image: url("../../assets/Image/fondo-login2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
-.texto{
+.texto {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+/* 
+!#####################################################################
+?AvatarPicker
+!#####################################################################
+*/
+
+.avatar-item {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.avatar-item:hover {
+  transform: scale(1.1);
+}
+
+.avatar-item.selected {
+  border: 3px solid;
+  border-image: linear-gradient(160deg, #073b5a 0%, #28d9b3 50%, #3498db 100%);
+  border-image-slice: 1;
+}
+/* 
+!#####################################################################
+?rooms
+!#####################################################################
+*/
+.btn-add-room {
+  background-color: #3734db;
+  background-image: linear-gradient(160deg, #1474b4 0%, #220b80 100%);
+}
+.btn-add-room:hover {
+  border: 1px solid;
+  border-image: linear-gradient(160deg,  #28d9b3 0%, #3498db 100%);
+  border-image-slice: 1;
+  background-color: #5d5bd7;
+  background-image: linear-gradient(160deg, #1497b4 0%, #0b3280 100%);
+}
+
+/* 
+!#####################################################################
+?Login
+!#####################################################################
+*/
+.gradient-custom-2 {
+  background: #000000;
+  background-image: url("../../assets/Image/patron.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.bg-imagen {
+  background-image: url("../../assets/Image/fondo-login2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.texto {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+:focus {
+  outline: none;
+}
+
+.efecto {
+  width: 100%;
+  padding: 0px;
+  position: relative;
+}
+
+input[type="text"] {
+  left: 2px;
+  font: 15px/24px "Lato", Arial, sans-serif;
+  color: #333;
+  width: 82%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+
+.effect-1 {
+  border: 0;
+  padding: 7px 0;
+  border-bottom: 1px solid #ccc;
+  width: 80%;
+  position: relative; /* Agrega esta línea */
+}
+
+.effect-1 ~ .focus-border {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  /*Cambiaellefta50%*/width: 0;
+  height: 2px;
+  background-color: #3399ff;
+  transition: 0.7s;
+  transform: translateX(-50%);
+  -webkit-transition: 0.7s;
+  -moz-transition: 0.7s;
+  -ms-transition: 0.7s;
+  -o-transition: 0.7s;
+}
+
+.effect-1:focus ~ .focus-border {
+  width: 82%;
+  transition: 0.7s;
+  transform: translateX(-50%);
+
+  -webkit-transition: 0.7s;
+  -moz-transition: 0.7s;
+  -ms-transition: 0.7s;
+  -o-transition: 0.7s;
+}
+
+/* ---------------------------------------------------- */
+/* Error formulario */
+/* ---------------------------------------------------- */
+.error_form {
+  display: inline-block;
+  cursor: pointer;
+  color: red;
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0.2rem 0.5rem;
+  background: transparent;
+  border-radius: 0.5em;
+  transition: ease-in-out 0.8s;
+}
+
+.error_form-container {
+  text-align: center; /* Centrar horizontalmente */
 }

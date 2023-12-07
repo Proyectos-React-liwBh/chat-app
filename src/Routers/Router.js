@@ -6,7 +6,7 @@ import Register from "../Pages/Register";
 import Error404 from "../Pages/Error404";
 import Rooms from "../Pages/Rooms/Rooms";
 import Room from "../Pages/Room/Room";
-import Profile from "../Pages/Profile";
+import Profile from "../Pages/Profile/Profile";
 
 //rutas
 export const routerApp = [

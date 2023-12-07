@@ -127,12 +127,12 @@ const Navbar = () => {
                   className="dropdown-menu dropdown-menu-end bg-dark bg-gradient text-white list-unstyled"
                   aria-labelledby="profileDropdown"
                 >
-                  {localStorage.getItem("usuario") ? (
+                  {!localStorage.getItem("usuario") ? (
                     <>
                       <li className="m-2 hover-dark">
                         <Link
                           className="d-flex align-items-center text-decoration-none text-white"
-                          to="/perfil"
+                          to="/profile"
                         >
                           <FaUser />
                           <span className="ms-2">Perfil</span>
