@@ -8,8 +8,12 @@ import * as Exp from "../assets/ExpresionesRegulares/Expresiones";
 import { Link } from "react-router-dom";
 import ErrorForm from "../Components//ErrorForm";
 import { LiaUserSolid, LiaUserFriendsSolid } from "react-icons/lia";
+
+import asteroide from "../assets/Image/asteroide.png";
+import asteroide2 from "../assets/Image/asteroide2.png";
+import asteroide3 from "../assets/Image/asteroide3.png";
+
 const Register = () => {
-  
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -61,10 +65,10 @@ const Register = () => {
     },
   });
   return (
-    <div className=" min-vh-100 bg-register d-flex align-items-center justify-content-center">
-      <div className="  gradient-form w-100">
-        <div className="row m-0 d-flex py-md-2 py-lg-2 justify-content-center">
-          <div className=" shadow-sm border-top bg-white col-10 col-md-6 col-sm-8 col-lg-4">
+    <div className=" min-vh-100 bg-register d-flex align-items-center justify-content-center overflow-hidden position-relative">
+      <div className="gradient-form w-100 ">
+        <div className="row m-0 d-flex py-5 justify-content-center">
+          <div className=" shadow-sm border-top rounded-3 bg-white col-10 col-md-6 col-sm-8 col-lg-4">
             <div className="d-flex flex-column justify-content-center   rounded-3">
               <div className="text-center mt-4">
                 <img
@@ -76,11 +80,11 @@ const Register = () => {
                   className="rounded"
                 />
 
-                <h4 className="mt-1 mb-5 pb-1">Chat Space</h4>
+                <h4 className="mt-1 mb-2 pb-1">Chat Space</h4>
               </div>
 
               <h2 className="text-center text-primary">
-                Registra tu cuenta de Chat Space
+                Registra tu cuenta gratis
               </h2>
 
               <div className="">
@@ -111,7 +115,7 @@ const Register = () => {
               <div className="">
                 <div className="efecto my-3 d-flex align-items-center justify-content-center ">
                   <LiaUserFriendsSolid className={`mx-2  icon`} />
-                 
+
                   <input
                     className="effect-1"
                     type="text"
@@ -193,33 +197,20 @@ const Register = () => {
                   <Link className="text-muted mx-2" to={"/login"}>
                     Ya tienes cuenta?
                   </Link>
-                  <Link className="text-muted " to={"/forgot-password"}>
-                    Olvido su contraseña?
-                  </Link>
                 </div>
-              </div>
-              <div className="d-flex flex-row align-items-center justify-content-center pb-3 mb-4">
-                <Link
-                  to={"/"}
-                  className="mx-2 btn btn-outline-primary d-flex align-items-center"
-                >
-                  <FaHome className="mx-1  " />
-                  Inicio
-                </Link>
               </div>
             </div>
           </div>
 
-          <div className=" rounded-3 px-0 d-none d-md-block col-6 col-lg-4">
-            <div className="d-flex flex-column  justify-content-center bg-white h-100 w-100  bg-imagen">
-
-            </div>
+          <div className="">
+            <img src={asteroide} alt="Asteroide" className="asteroid first" />
+            <img src={asteroide2} alt="Asteroide" className="asteroid second" />
+            <img src={asteroide3} alt="Asteroide" className="asteroid third " />
           </div>
         </div>
       </div>
     </div>
+  );
+};
 
-  )
-}
-
-export default Register
+export default Register;
