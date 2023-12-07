@@ -55,3 +55,10 @@ Principales caracteristicas:
 * URL: https://www.npmjs.com/package/mdb-react-ui-kit
 * Comandos: 
 -  ```npm i mdb-react-ui-kit```
+
+#### React formik
+* comando 1: `npm install formik --save`
+* comando 2: `npm install yup --save`
+* documentación: https://formik.org/docs/overview
+* useFormik documentación: https://formik.org/docs/api/useFormik
+* useFormik ejemplos: https://dev.to/franklin030601/formularios-dinamicos-con-formik-y-react-js-4hne
