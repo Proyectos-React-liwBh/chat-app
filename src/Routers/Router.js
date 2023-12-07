@@ -8,6 +8,7 @@ import Rooms from "../Pages/Rooms/Rooms";
 import Room from "../Pages/Room/Room";
 import Profile from "../Pages/Profile/Profile";
 import Forgot from "../Pages/forgot";
+import Recovery from "../Pages/Recovery";
 
 //rutas
 export const routerApp = [
@@ -37,6 +38,10 @@ export const routerApp = [
     {
         path: "/forgot-password",
         component: Forgot,
+    },
+    {
+        path: "/recovery",
+        component: Recovery,
     },
     {
         path:"*",

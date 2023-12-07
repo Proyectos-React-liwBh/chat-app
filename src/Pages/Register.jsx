@@ -2,7 +2,7 @@
 
 const Register = () => {
   return (
-    <div>Register</div>
+    <div className="bg-register min-vh-100">Register</div>
   )
 }
 
