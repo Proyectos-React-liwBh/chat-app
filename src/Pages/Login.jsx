@@ -50,9 +50,9 @@ const Login = () => {
     },
   });
   return (
-    <div className="gradient-custom-2 min-vh-100 d-flex align-items-center justify-content-center">
+    <div className="gradient-custom-2 min-vh-100  d-flex align-items-center justify-content-center">
       <div className="  gradient-form">
-        <div className="row d-flex py-5 justify-content-center">
+        <div className="row d-flex py-5 justify-content-center mx-0 px-0">
           <div className=" shadow-sm border-top bg-white col-10 col-md-6 col-sm-8 col-lg-4">
             <div className="d-flex flex-column justify-content-center   rounded-3">
               <div className="text-center mt-4">
