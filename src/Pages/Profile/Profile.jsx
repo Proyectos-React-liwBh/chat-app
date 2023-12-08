@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Layout from "../../Components/Layout";
 import AvatarPiker from "./AvatarPiker";
 import { FaUserCog, FaUserEdit, FaUserCircle } from "react-icons/fa";
@@ -5,24 +6,33 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { BiSolidUserRectangle } from "react-icons/bi";
 import InfoGeneral from "./InfoGeneral";
 import { useFormik } from "formik";
-
 import * as Yup from "yup";
 import * as Exp from "../../assets/ExpresionesRegulares/Expresiones";
-
 import ErrorForm from "../../Components//ErrorForm";
 import { LiaUserSolid, LiaUserFriendsSolid } from "react-icons/lia";
+import {
+  MdOutlineMail,
+  MdOutlineLockPerson,
+  MdOutlineLockClock,
+} from "react-icons/md";
+import { useSelector, useDispatch } from "react-redux";
+import { cleanAlert } from "../../Redux/UserSlice";
+import {
+  SweetAlertError,
+  SweetAlertSuccess,
+} from "../../assets/SweetAlert/SweetAlert";
 
-import { MdOutlineMail, MdOutlineLockPerson, MdOutlineLockClock, } from "react-icons/md";
 const Profile = () => {
-  //temporal
-  const usuario = {
-    id: 1,
-    username: "liwbh",
-    first_name: "Wilfredo",
-    last_name: "Barquero Herrera",
-    email: "liwbarqueroh@gmail.com",
-    avatar: 2,
-  };
+  const dispatch = useDispatch();
+  const { message, errorRedux, userSession, token } = useSelector(
+    (state) => state.user
+  );
+  const [usuario, setUsuario] = useState({});
+
+  useEffect(() => {
+    setUsuario(userSession);
+    // eslint-disable-next-line
+  }, [userSession]);
 
   const formikCambiarContrasena = useFormik({
     initialValues: {
@@ -39,7 +49,7 @@ const Profile = () => {
           Exp.passwordRegex,
           "La contraseña debe tener al menos menos una Mayúscula, una Minúscula y un Número."
         ),
-        confirmPassword: Yup.string()
+      confirmPassword: Yup.string()
         .oneOf(
           [Yup.ref("usuarioContrasena"), null],
           "Las contraseñas deben coincidir"
@@ -96,6 +106,20 @@ const Profile = () => {
       /*  dispatch(editarUsuario(values)); */
     },
   });
+
+  useEffect(() => {
+    if (message) {
+      SweetAlertSuccess(message);
+      dispatch(cleanAlert());
+    }
+
+    if (errorRedux) {
+      SweetAlertError(errorRedux);
+      dispatch(cleanAlert());
+    }
+
+    // eslint-disable-next-line
+  }, [message, errorRedux]);
 
   return (
     <div className="bg-profile">
@@ -199,7 +223,6 @@ const Profile = () => {
                           />
                         </div>
                         <div className="row">
-                          
                           <div className="col-12 col-md-5 d-none d-md-block"></div>
                           <div className="col-12 col-md-7  d-flex justify-content-center">
                             {/* mensaje de error */}
@@ -304,11 +327,8 @@ const Profile = () => {
                   </div>
 
                   {/* cambiar contraseña */}
-                  <div
-                    className="tab-pane fade  pt-3"
-                    id="cambiar-contrasena" 
-                  >
-                     <form
+                  <div className="tab-pane fade  pt-3" id="cambiar-contrasena">
+                    <form
                       className="p-5"
                       onSubmit={formikCambiarContrasena.handleSubmit}
                     >
@@ -331,28 +351,24 @@ const Profile = () => {
                             autoComplete="off"
                             onChange={formikCambiarContrasena.handleChange}
                             onBlur={formikCambiarContrasena.handleBlur}
-                            value={
-                              formikCambiarContrasena.values.password
-                            }
+                            value={formikCambiarContrasena.values.password}
                           />
                         </div>
                         <div className="row">
                           <div className="col-12 col-md-5 d-none d-md-block"></div>
                           <div className="col-12 col-md-7  d-flex justify-content-center">
-                          {/* mensaje de error */}
-                          {formikCambiarContrasena.touched.password &&
-                            formikCambiarContrasena.errors
-                              .password && (
-                              <div className="error_form-container">
-                                <ErrorForm
-                                  message={
-                                    formikCambiarContrasena.errors
-                                      .password
-                                  }
-                                />
-                              </div>
-                            )}
-                        </div>
+                            {/* mensaje de error */}
+                            {formikCambiarContrasena.touched.password &&
+                              formikCambiarContrasena.errors.password && (
+                                <div className="error_form-container">
+                                  <ErrorForm
+                                    message={
+                                      formikCambiarContrasena.errors.password
+                                    }
+                                  />
+                                </div>
+                              )}
+                          </div>
                         </div>
                       </div>
                       <div className="row my-4">
@@ -383,19 +399,20 @@ const Profile = () => {
                         <div className="row">
                           <div className="col-12 col-md-5 d-none d-md-block"></div>
                           <div className="col-12 col-md-7  d-flex justify-content-center">
-                          {/* mensaje de error */}
-                          {formikCambiarContrasena.touched.confirmPassword &&
-                            formikCambiarContrasena.errors.confirmPassword && (
-                              <div className="error_form-container">
-                                <ErrorForm
-                                  message={
-                                    formikCambiarContrasena.errors
-                                      .confirmPassword
-                                  }
-                                />
-                              </div>
-                            )}
-                        </div>
+                            {/* mensaje de error */}
+                            {formikCambiarContrasena.touched.confirmPassword &&
+                              formikCambiarContrasena.errors
+                                .confirmPassword && (
+                                <div className="error_form-container">
+                                  <ErrorForm
+                                    message={
+                                      formikCambiarContrasena.errors
+                                        .confirmPassword
+                                    }
+                                  />
+                                </div>
+                              )}
+                          </div>
                         </div>
                       </div>
 
@@ -408,11 +425,10 @@ const Profile = () => {
                         </div>
                       </div>
                     </form>
-
                   </div>
                   {/* cambiar avatar */}
                   <div className="tab-pane fade  pt-3" id="cambiar-avatar">
-                    <AvatarPiker />
+                    <AvatarPiker usuario={usuario} token={token} />
                   </div>
                 </div>
               </div>

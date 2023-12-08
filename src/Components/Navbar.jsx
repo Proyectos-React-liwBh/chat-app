@@ -1,22 +1,30 @@
-//import { useEffect } from "react";
+import { useEffect } from "react";
 import logo from "../assets/Image/logo.png";
-import { FaGear, FaBell } from "react-icons/fa6";
 import CardNotification from "../Pages/Card/CardNotification";
+import { FaGear, FaBell } from "react-icons/fa6";
 import { TiThMenu } from "react-icons/ti";
-import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { MdOutlineRoomPreferences } from "react-icons/md";
-
 import { BiLogInCircle, BiLogOutCircle } from "react-icons/bi";
-const Navbar = () => {
-  /* const dispatch = useDispatch(); */
-  /* const navigate = useNavigate();
+import { Link, useNavigate } from "react-router-dom";
+import useSesion from "../Hooks/UseSession";
+import { useDispatch, useSelector } from "react-redux";
+import { closeSession, cleanAlert } from "../Redux/UserSlice";
+import {
+  SweetAlertError,
+  SweetAlertSuccess,
+} from "../assets/SweetAlert/SweetAlert";
+import { UseAvatarIcon } from "../Hooks/UseAvatarIcon";
 
-  const { message, errorRedux } = useSelector((state) => state.usuario);
+const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userSession } = useSesion();
+  const { message, errorRedux } = useSelector((state) => state.user);
 
   const cerrarSesionUsuario = () => {
     console.log("cerrar sesion");
-    dispatch(cerrarSesion());
+    dispatch(closeSession());
     setTimeout(() => {
       navigate("/login");
     }, 1500);
@@ -25,14 +33,15 @@ const Navbar = () => {
   useEffect(() => {
     if (message) {
       SweetAlertSuccess(message);
-      dispatch(limpiarAlertas());
+      dispatch(cleanAlert());
     }
     if (errorRedux) {
       SweetAlertError(errorRedux);
-      dispatch(limpiarAlertas());
+      dispatch(cleanAlert());
     }
     // eslint-disable-next-line
-  }, [message, errorRedux]); */
+  }, [message, errorRedux]);
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg fixed-top bg-dark navbar-dark">
@@ -78,10 +87,10 @@ const Navbar = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <FaBell className="text-white fs-4 bell-container" />
+                  <FaBell className="text-white fs-5 bell-container" />
                   {/* Counter - Notificación */}
                   <span className="badge bell-counter rounded-pill badge-notification bg-danger">
-                    0
+                    3
                   </span>
                 </div>
                 {/* Dropdown - Notificación  */}
@@ -111,8 +120,24 @@ const Navbar = () => {
                   </Link>
                 </div>
               </li>
+              {/* info base de usuario */}
+              <li className="nav-item dropdown mx-md-2">
+                <div className="nav-link mx-md-2 d-flex justify-content-evenly align-items-center">
+                  {/* icono de avatar */}
+                  <div className="me-3">
+                    <img className="img-fluid" width={30} height={30} src={UseAvatarIcon(userSession?.avatar).img} alt="Avatar de usuario" />
+                  </div>
+                  {/* Username */}
+                  <div className="">
+                    <span className="text-white me-1">Hola,</span>
+                    <span className="text-white fw-bold">
+                      {userSession?.username}
+                    </span>
+                  </div>
+                </div>
+              </li>
 
-              {/* profile */}
+              {/* profile menu */}
               <li className="nav-item dropdown mx-md-2">
                 <div
                   className="nav-link dropdown-toggle"
@@ -127,7 +152,7 @@ const Navbar = () => {
                   className="dropdown-menu dropdown-menu-end bg-dark bg-gradient text-white list-unstyled"
                   aria-labelledby="profileDropdown"
                 >
-                  {!localStorage.getItem("usuario") ? (
+                  {sessionStorage.getItem("user") ? (
                     <>
                       <li className="m-2 hover-dark">
                         <Link
@@ -144,7 +169,7 @@ const Navbar = () => {
                       <li className="m-2 hover-dark">
                         <div
                           className="d-flex align-items-center text-white cursor-pointer"
-                          /* onClick={cerrarSesionUsuario} */
+                          onClick={cerrarSesionUsuario}
                         >
                           <BiLogOutCircle />
                           <span className="ms-2">Cerrar Sesión</span>

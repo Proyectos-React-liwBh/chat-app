@@ -1,15 +1,26 @@
-import { MdOutlineEmail } from "react-icons/md";
+import { useEffect } from "react";
 import logo from "../assets/Image/logo.png";
+import { MdOutlineEmail } from "react-icons/md";
 import { CgPassword } from "react-icons/cg";
-import { FaHome } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import * as Exp from "../assets/ExpresionesRegulares/Expresiones";
 import { Link } from "react-router-dom";
 import ErrorForm from "../Components//ErrorForm";
+import {
+  SweetAlertError,
+  SweetAlertSuccess,
+} from "../Assets/SweetAlert/SweetAlert";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, cleanAlert } from "../Redux/UserSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  //manejo de alertas
+  const { errorRedux, message } = useSelector((state) => state.user);
 
   const formik = useFormik({
     initialValues: {
@@ -36,11 +47,11 @@ const Login = () => {
           alert(JSON.stringify(values, null, 2)); */
 
       //enviar datos a backend
-      //dispatch(logearUsuario(values));
+      dispatch(loginUser(values));
 
       //redirecionamiento a dashboard
       setTimeout(() => {
-        //navigate("/");
+        navigate("/");
       }, 1500);
 
       //reseteo de formulario
@@ -49,6 +60,20 @@ const Login = () => {
       }, 1500);
     },
   });
+
+  useEffect(() => {
+    if (message) {
+      SweetAlertSuccess(message);
+      dispatch(cleanAlert());
+    }
+    if (errorRedux) {
+      SweetAlertError(errorRedux);
+      dispatch(cleanAlert());
+    }
+
+    // eslint-disable-next-line
+  }, [message, errorRedux]);
+
   return (
     <div className="gradient-custom-2 min-vh-100  d-flex align-items-center justify-content-center">
       <div className="  gradient-form">
@@ -71,65 +96,62 @@ const Login = () => {
               <h2 className="text-center text-primary">
                 Inicia sesión con tu cuenta
               </h2>
-              <form action="">
+              <form onSubmit={formik.handleSubmit} >
+                <div className="">
+                  <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                    <MdOutlineEmail className={`mx-2  icon`} />
+                    <input
+                      className="effect-1"
+                      type="email"
+                      placeholder="Correo electronico"
+                      id="email"
+                      name="email"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
+                      autoComplete="off"
+                    />
 
-              
+                    <span className="focus-border"></span>
+                  </div>
 
-              <div className="">
-                <div className="efecto my-3 d-flex align-items-center justify-content-center ">
-                  <MdOutlineEmail className={`mx-2  icon`} />
-                  <input
-                    className="effect-1"
-                    type="email"
-                    placeholder="Correo electronico"
-                    id="email"
-                    name="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                    autoComplete="off"
-                  />
-
-                  <span className="focus-border"></span>
+                  {formik.touched.email && formik.errors.email && (
+                    <div className="error_form-container row">
+                      <ErrorForm message={formik.errors.email} />
+                    </div>
+                  )}
                 </div>
 
-                {formik.touched.email && formik.errors.email && (
-                  <div className="error_form-container row">
-                    <ErrorForm message={formik.errors.email} />
+                <div className="">
+                  <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                    <CgPassword className=" mx-2 icon" />
+                    <input
+                      className="effect-1 "
+                      type="password"
+                      placeholder="Contraseña"
+                      id="password"
+                      name="password"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                      autoComplete="off"
+                    />
+                    <span className="focus-border"></span>
                   </div>
-                )}
-              </div>
 
-              <div className="">
-                <div className="efecto my-3 d-flex align-items-center justify-content-center ">
-                  <CgPassword className=" mx-2 icon" />
-                  <input
-                    className="effect-1 "
-                    type="password"
-                    placeholder="Contraseña"
-                    id="password"
-                    name="password"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.password}
-                    autoComplete="off"
-                  />
-                  <span className="focus-border"></span>
+                  {formik.touched.password && formik.errors.password && (
+                    <div className="error_form-container">
+                      <ErrorForm message={formik.errors.password} />
+                    </div>
+                  )}
                 </div>
 
-                {formik.touched.password && formik.errors.password && (
-                  <div className="error_form-container">
-                    <ErrorForm message={formik.errors.password} />
-                  </div>
-                )}
-              </div>
+                <div className="text-center  w-50 m-auto pt-3">
+                  <button type="submit" className="text-white mb-4 w-100 p-2 rounded gradient-custom-2 hover">
+                    Iniciar sesión
+                  </button>
+                </div>
 
-              <div className="text-center  w-50 m-auto pt-3">
-                <button className="text-white mb-4 w-100 p-2 rounded gradient-custom-2 hover">
-                  Iniciar sesión
-                </button>
-              </div>
-     
                 <div className="d-flex col justify-content-center mb-3 py-4">
                   <Link className="text-muted mx-4" to={"/register"}>
                     No tienes cuenta?
@@ -138,11 +160,8 @@ const Login = () => {
                     Olvido su contraseña?
                   </Link>
                 </div>
-
-
               </form>
             </div>
-            
           </div>
 
           <div className=" rounded-3 px-0 d-none d-md-block col-6 col-lg-4">
