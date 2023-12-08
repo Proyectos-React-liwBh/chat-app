@@ -86,7 +86,7 @@ const Register = () => {
               <h2 className="text-center text-primary">
                 Registra tu cuenta gratis
               </h2>
-
+              <form action="">
               <div className="">
                 <div className="efecto my-3 d-flex align-items-center justify-content-center ">
                   <LiaUserSolid className={`mx-2  icon`} />
@@ -199,6 +199,7 @@ const Register = () => {
                   </Link>
                 </div>
               </div>
+              </form>
             </div>
           </div>
 

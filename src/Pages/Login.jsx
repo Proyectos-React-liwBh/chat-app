@@ -129,25 +129,17 @@ const Login = () => {
                   Iniciar sesión
                 </button>
               </div>
-              <div className="row ">
-                <div className="d-flex col justify-content-center mb-3">
-                  <Link className="text-muted mx-2" to={"/register"}>
+     
+                <div className="d-flex col justify-content-center mb-3 py-4">
+                  <Link className="text-muted mx-4" to={"/register"}>
                     No tienes cuenta?
                   </Link>
-                  <Link className="text-muted " to={"/forgot-password"}>
+                  <Link className="text-muted mx-4" to={"/forgot-password"}>
                     Olvido su contraseña?
                   </Link>
                 </div>
-              </div>
-              <div className="d-flex flex-row align-items-center justify-content-center pb-3 mb-4">
-                <Link
-                  to={"/"}
-                  className="mx-2 btn btn-outline-primary d-flex align-items-center"
-                >
-                  <FaHome className="mx-1  " />
-                  Inicio
-                </Link>
-              </div>
+
+
               </form>
             </div>
             
