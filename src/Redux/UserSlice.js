@@ -181,6 +181,7 @@ const userSlice = createSlice({
       state.message = "";
     });
     builder.addCase(insertUser.fulfilled, (state, action) => {
+      console.log(action.payload)
       if (action.payload.message) {
         state.message = action.payload.message;
       } else {

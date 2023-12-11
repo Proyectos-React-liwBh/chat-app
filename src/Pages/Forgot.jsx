@@ -1,16 +1,11 @@
 import { MdOutlineEmail } from "react-icons/md";
 import logo from "../assets/Image/logo.png";
-import { CgPassword } from "react-icons/cg";
-import { FaHome } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import * as Exp from "../assets/ExpresionesRegulares/Expresiones";
 import { Link } from "react-router-dom";
 import ErrorForm from "../Components//ErrorForm";
-
-import asteroide from "../assets/Image/asteroide.png";
-import asteroide2 from "../assets/Image/asteroide2.png";
-import asteroide3 from "../assets/Image/asteroide3.png";
+import Asteroids from "../Components/Asteroids";
 
 const Forgot = () => {
   const formik = useFormik({
@@ -102,11 +97,7 @@ const Forgot = () => {
             </div>
           </div>
 
-          <div className="">
-            <img src={asteroide} alt="Asteroide" className="asteroid first" />
-            <img src={asteroide2} alt="Asteroide" className="asteroid second" />
-            <img src={asteroide3} alt="Asteroide" className="asteroid third " />
-          </div>
+          <Asteroids />
         </div>
       </div>
      

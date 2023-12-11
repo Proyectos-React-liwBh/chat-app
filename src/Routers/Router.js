@@ -2,7 +2,7 @@
 
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
-import Register from "../Pages/Register";
+import Register from "../Pages/Register/Register";
 import Error404 from "../Pages/Error404";
 import Rooms from "../Pages/Rooms/Rooms";
 import Room from "../Pages/Room/Room";

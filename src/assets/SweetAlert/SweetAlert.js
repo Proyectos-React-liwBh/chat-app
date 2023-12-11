@@ -108,3 +108,18 @@ export const SweetAlertConfirm = (title, text, funcionAceptar, funcionCancelar) 
     }
   })
 }
+
+export const SweetAlertAccept = (title, text, funcionAceptar) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: 'success',
+    confirmButtonColor: '#52BE80',
+    confirmButtonText: 'Aceptar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      funcionAceptar();
+    }
+  })
+}
+

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Layout from "../Components/Layout";
 import Spinner from "../Components/Spinner";
 import Pagination from "@mui/material/Pagination";

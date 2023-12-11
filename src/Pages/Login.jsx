@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/Image/logo.png";
 import { MdOutlineEmail } from "react-icons/md";
 import { CgPassword } from "react-icons/cg";
@@ -10,10 +10,11 @@ import ErrorForm from "../Components//ErrorForm";
 import {
   SweetAlertError,
   SweetAlertSuccess,
-} from "../Assets/SweetAlert/SweetAlert";
+} from "../assets/SweetAlert/SweetAlert";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, cleanAlert } from "../Redux/UserSlice";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ const Login = () => {
 
   //manejo de alertas
   const { errorRedux, message } = useSelector((state) => state.user);
+
+  //recuerdame cookie
+  const [rememberMe, setRememberMe] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -45,6 +49,10 @@ const Login = () => {
     onSubmit: (values, { resetForm }) => {
       /* console.log(values);
           alert(JSON.stringify(values, null, 2)); */
+
+      if (rememberMe) {
+        Cookies.set("rememberedUser", values.email, { expires: 7 }); // Cookie expira en 7 días
+      }
 
       //enviar datos a backend
       dispatch(loginUser(values));
@@ -74,6 +82,14 @@ const Login = () => {
     // eslint-disable-next-line
   }, [message, errorRedux]);
 
+  useEffect(() => {
+    const rememberedUser = Cookies.get("rememberedUser");
+    if (rememberedUser) {
+      formik.setFieldValue("email", rememberedUser);
+      setRememberMe(true);
+    }
+  }, []);
+
   return (
     <div className="gradient-custom-2 min-vh-100  d-flex align-items-center justify-content-center">
       <div className="  gradient-form">
@@ -96,7 +112,7 @@ const Login = () => {
               <h2 className="text-center text-primary">
                 Inicia sesión con tu cuenta
               </h2>
-              <form onSubmit={formik.handleSubmit} >
+              <form onSubmit={formik.handleSubmit}>
                 <div className="">
                   <div className="efecto my-3 d-flex align-items-center justify-content-center ">
                     <MdOutlineEmail className={`mx-2  icon`} />
@@ -147,9 +163,26 @@ const Login = () => {
                 </div>
 
                 <div className="text-center  w-50 m-auto pt-3">
-                  <button type="submit" className="text-white mb-4 w-100 p-2 rounded gradient-custom-2 hover">
+                  <button
+                    type="submit"
+                    className="text-white mb-4 w-100 p-2 rounded gradient-custom-2 hover"
+                  >
                     Iniciar sesión
                   </button>
+                </div>
+
+                <div className="text-center">
+                  <input
+                    type="checkbox"
+                    id="rememberMe"
+                    name="rememberMe"
+                    className="form-check-input"
+                    checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}
+                  />
+                  <label htmlFor="rememberMe" className="ms-2">
+                    Recuérdame
+                  </label>
                 </div>
 
                 <div className="d-flex col justify-content-center mb-3 py-4">
