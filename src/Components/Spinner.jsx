@@ -1,7 +1,7 @@
 const Spinner = () => {
   return (
     <div>
-      <div className="row py-5">
+      <div className="row">
         <div className="d-flex flex-column justify-content-center align-items-center">
           <div className="loader">
             Loading

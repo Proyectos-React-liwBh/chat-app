@@ -8,7 +8,7 @@ import Rooms from "../Pages/Rooms/Rooms";
 import Room from "../Pages/Room/Room";
 import Profile from "../Pages/Profile/Profile";
 import Forgot from "../Pages/forgot";
-import Recovery from "../Pages/Recovery";
+import Activate from "../Pages/Activate";
 
 //rutas
 export const routerApp = [
@@ -40,8 +40,8 @@ export const routerApp = [
         component: Forgot,
     },
     {
-        path: "/recovery",
-        component: Recovery,
+        path: "/activate/:token",
+        component: Activate,
     },
     {
         path:"*",

@@ -42,19 +42,16 @@ export const editUser = createAsyncThunk(
   "user/editUser",
 
   async (data) => {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/user/${data.id}/`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${data.token}`,
-        },
-        body: JSON.stringify({
-          ...data,
-        }),
-      }
-    );
+    const response = await fetch(`http://127.0.0.1:8000/api/user/${data.id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.token}`,
+      },
+      body: JSON.stringify({
+        ...data,
+      }),
+    });
 
     return response.json();
   }
@@ -98,23 +95,38 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+export const verifyUser = createAsyncThunk(
+  "user/verifyUser",
+  async (data) => {
+    const response = await fetch(`http://127.0.0.1:8000/api/user/${data.id}/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.token}`,
+      },
+      body: JSON.stringify({
+        avatar: data.avatar,
+      }),
+    });
+
+    return response.json();
+  }
+);
+
 export const partialUpdateUser = createAsyncThunk(
   "user/partialUpdateUser",
 
   async (data) => {
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/user/${data.id}/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${data.token}`,
-        },
-        body: JSON.stringify({
-          avatar: data.avatar,
-        }),
-      }
-    );
+    const response = await fetch(`http://127.0.0.1:8000/api/user/${data.id}/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.token}`,
+      },
+      body: JSON.stringify({
+        avatar: data.avatar,
+      }),
+    });
 
     return response.json();
   }
@@ -181,7 +193,7 @@ const userSlice = createSlice({
       state.message = "";
     });
     builder.addCase(insertUser.fulfilled, (state, action) => {
-      console.log(action.payload)
+      console.log(action.payload);
       if (action.payload.message) {
         state.message = action.payload.message;
       } else {

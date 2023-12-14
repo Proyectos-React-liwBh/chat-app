@@ -11,7 +11,7 @@ const CardNotification = () => {
             <span className="fw-bold"><FaUser className="text-white me-2"/> liwbh</span>
             <span className="small fw-bold"><MdOutlineRoomPreferences className="text-white me-2" />Programacion en Python</span>
             <span className="fst-italic small"><ImFileText className="text-white me-2"/> Nuevo comentario</span>
-            <span className="small"><IoCalendarSharp className="text-white me-2"/>    6/12/2023</span>
+            <span className="small"><IoCalendarSharp className="text-white me-2"/>6/12/2023</span>
         </div>
     </li>
   )
