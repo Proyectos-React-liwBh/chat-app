@@ -57,11 +57,6 @@ const Login = () => {
       //enviar datos a backend
       dispatch(loginUser(values));
 
-      //redirecionamiento a dashboard
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-
       //reseteo de formulario
       setTimeout(() => {
         resetForm();
@@ -72,7 +67,13 @@ const Login = () => {
   useEffect(() => {
     if (message) {
       SweetAlertSuccess(message);
+
       dispatch(cleanAlert());
+
+      //redirecionamiento a dashboard
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     }
     if (errorRedux) {
       SweetAlertError(errorRedux);

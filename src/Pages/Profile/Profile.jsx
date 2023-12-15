@@ -8,9 +8,6 @@ import InfoGeneral from "./InfoGeneral";
 import FormChangePasswordProfile from "./FormChangePasswordProfile";
 import FormAdminProfile from "./FormAdminProfile";
 import FormEditProfile from "./FormEditProfile";
-
-
-
 import { RiAdminFill } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 import { cleanAlert } from "../../Redux/UserSlice";
@@ -137,7 +134,7 @@ const Profile = () => {
 
                   {/* cambiar contraseña */}
                   <div className="tab-pane fade  pt-3" id="cambiar-contrasena">
-                    <FormChangePasswordProfile />
+                    <FormChangePasswordProfile usuario={usuario} token={token}/>
                   </div>
                   {/* cambiar avatar */}
                   <div className="tab-pane fade  pt-3" id="cambiar-avatar">

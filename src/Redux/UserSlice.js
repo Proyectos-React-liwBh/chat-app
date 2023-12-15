@@ -42,14 +42,14 @@ export const editUser = createAsyncThunk(
   "user/editUser",
 
   async (data) => {
-    const response = await fetch(`http://127.0.0.1:8000/api/user/${data.id}/`, {
+    const response = await fetch(`http://127.0.0.1:8000/api/user/${data.usuario.id}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${data.token}`,
       },
       body: JSON.stringify({
-        ...data,
+        ...data.usuario,
       }),
     });
 
@@ -61,14 +61,17 @@ export const changePassword = createAsyncThunk(
   "user/changePassword",
 
   async (data) => {
-    const response = await fetch("", {
-      method: "PUT",
+
+    console.log(data)
+
+    const response = await fetch("http://127.0.0.1:8000/api/auth/update-password/", {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${data.token}`,
       },
       body: JSON.stringify({
-        ...data,
+        ...data.usuario,
       }),
     });
 
@@ -76,11 +79,12 @@ export const changePassword = createAsyncThunk(
   }
 );
 
+//eliminar usuario
 export const deleteUser = createAsyncThunk(
   "user/deleteUser",
 
   async (data) => {
-    const response = await fetch(`http://127.0.0.1:8000/api/user/${data.id}/`, {
+    const response = await fetch(`http://127.0.0.1:8000/api/user/${data.usuario.id}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -95,17 +99,17 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+//activar usuario
 export const verifyUser = createAsyncThunk(
   "user/verifyUser",
   async (data) => {
-    const response = await fetch(`http://127.0.0.1:8000/api/user/${data.id}/`, {
-      method: "PATCH",
+    const response = await fetch(`http://127.0.0.1:8000/api/auth/verify-otp/`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${data.token}`,
       },
       body: JSON.stringify({
-        avatar: data.avatar,
+       otp: data,
       }),
     });
 
@@ -113,6 +117,7 @@ export const verifyUser = createAsyncThunk(
   }
 );
 
+//actualizar avatar
 export const partialUpdateUser = createAsyncThunk(
   "user/partialUpdateUser",
 
@@ -193,7 +198,7 @@ const userSlice = createSlice({
       state.message = "";
     });
     builder.addCase(insertUser.fulfilled, (state, action) => {
-      console.log(action.payload);
+      //console.log(action.payload);
       if (action.payload.message) {
         state.message = action.payload.message;
       } else {
@@ -206,6 +211,26 @@ const userSlice = createSlice({
       state.errorRedux = "Ocurrio un error al crear el usuario";
     });
 
+    //verificar usuario
+    builder.addCase(verifyUser.pending, (state) => {
+      state.loading = true;
+      state.errorRedux = null;
+      state.message = "";
+    });
+    builder.addCase(verifyUser.fulfilled, (state, action) => {
+      //console.log(action.payload)
+      if (action.payload.message) {
+        state.message = action.payload.message;
+      } else {
+        state.errorRedux = action.payload.error;
+      }
+      state.loading = false;
+    });
+    builder.addCase(verifyUser.rejected, (state) => {
+      state.loading = false;
+      state.errorRedux = "Ocurrio un error al verificar el usuario";
+    });
+
     // logear usuario
     builder.addCase(loginUser.pending, (state) => {
       state.loading = true;
@@ -214,7 +239,7 @@ const userSlice = createSlice({
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.loading = false;
-      console.log(action.payload);
+      //console.log(action.payload);
       if (action.payload.user) {
         state.userSession = { ...action.payload.user };
         state.token = action.payload.access;
@@ -230,7 +255,12 @@ const userSlice = createSlice({
 
         state.message = "Iniciando sesión...";
       } else {
-        state.errorRedux = "Credenciales incorrectas o no validas!";
+        if(action.payload.error === "El usuario no está verificado."){
+          state.errorRedux = "El no ha activado su cuenta, por favor verifique su correo electronico";
+        }else{
+
+          state.errorRedux = "Credenciales incorrectas o no validas!";
+        }
       }
     });
     builder.addCase(loginUser.rejected, (state) => {
@@ -245,8 +275,10 @@ const userSlice = createSlice({
       state.message = "";
     });
     builder.addCase(changePassword.fulfilled, (state, action) => {
+      console.log(action.payload)
       if (action.payload.message) {
-        state.message = action.payload.mensaje;
+        console.log("entro", action.payload.message)
+        state.message = action.payload.message;
       } else {
         state.errorRedux = action.payload.error;
       }
@@ -264,6 +296,7 @@ const userSlice = createSlice({
       state.message = "";
     });
     builder.addCase(editUser.fulfilled, (state, action) => {
+      //console.log(action.payload)
       if (action.payload.message) {
         state.message = action.payload.message;
         state.userSession = { ...action.payload.user };

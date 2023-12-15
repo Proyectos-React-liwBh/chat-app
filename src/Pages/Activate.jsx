@@ -13,7 +13,8 @@ const Activate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { token } = useParams();
+  const { otp } = useParams();
+  console.log(otp)
 
   //manejo de alertas
   const { errorRedux, message } = useSelector((state) => state.user);
@@ -21,10 +22,10 @@ const Activate = () => {
   useEffect(() => {
     if (message) {
       SweetAlertSuccess(message);
-      if (message === "Usuario verificado correctamente!") {
+      if (message === "Cuenta activada correctamente!") {
         setTimeout(() => {
           navigate("/login");
-        }, 3000);
+        }, 2500);
       }
       dispatch(cleanAlert());
     }
@@ -37,12 +38,12 @@ const Activate = () => {
   }, [message, errorRedux]);
 
   useEffect(() => {
-    if (token) {
-      dispatch(verifyUser(token));
+    if (otp) {
+      dispatch(verifyUser(otp));
     }
 
     // eslint-disable-next-line
-  }, [token]);
+  }, [otp]);
 
   return (
     <div className="bg-recovery min-vh-100  ">

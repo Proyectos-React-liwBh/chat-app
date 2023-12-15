@@ -9,17 +9,26 @@ import { useDispatch } from "react-redux";
 import { LiaUserSolid, LiaUserFriendsSolid,LiaUserTagSolid  } from "react-icons/lia";
 import { MdOutlineMail } from "react-icons/md";
 
-const FormEditProfile = ({ usuario }) => {
+const FormEditProfile = ({ usuario, token }) => {
   const dispatch = useDispatch();
 
   const formikEditarUsuario = useFormik({
     initialValues: {
       id: 0,
+      username: "",
       first_name: "",
       last_name: "",
       email: "",
     },
     validationSchema: Yup.object({
+      username: Yup.string()
+        .min(4, "El nombre de usuario debe tener al menos 4 caracteres")
+        .max(30, "El nombre de usuario debe tener menos de 30 caracteres")
+        .required("El nombre de usuario es requerido")
+        .matches(
+          Exp.usernameRegex,
+          "El nombre de usuario solo debe contener letras, números y guiones."
+        ),
       first_name: Yup.string()
         .min(3, "El nombre debe tener al menos 3 caracteres")
         .max(30, "El nombre debe tener menos de 30 caracteres")
@@ -48,7 +57,7 @@ const FormEditProfile = ({ usuario }) => {
       alert(JSON.stringify(values, null, 2)); */
 
       //enviar datos a backend
-      dispatch(editUser(values));
+      dispatch(editUser({usuario: values, token}));
 
       //reseteo de formulario
       resetForm();

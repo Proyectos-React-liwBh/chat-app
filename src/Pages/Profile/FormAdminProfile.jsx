@@ -1,17 +1,18 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { FaUserSlash } from "react-icons/fa";
 import { deleteUser, closeSession } from "../../Redux/UserSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const FormAdminProfile = () => {
+const FormAdminProfile = ({usuario, token}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [showDelete, setShowDelete] = useState(false);
 
   const handleDeleteUser = () => {
-    dispatch(deleteUser());
+    dispatch(deleteUser({ usuario, token}));
 
     setTimeout(() => {
       dispatch(closeSession());

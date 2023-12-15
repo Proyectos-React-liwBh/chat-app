@@ -40,7 +40,7 @@ export const routerApp = [
         component: Forgot,
     },
     {
-        path: "/activate/:token",
+        path: "/activate/:otp",
         component: Activate,
     },
     {

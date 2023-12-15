@@ -8,7 +8,7 @@ import { MdOutlineLockPerson, MdOutlineLockClock } from "react-icons/md";
 import { changePassword } from "../../Redux/UserSlice";
 import { useDispatch } from "react-redux";
 
-const FormChangePasswordProfile = ({usuario}) => {
+const FormChangePasswordProfile = ({usuario, token}) => {
   const dispatch = useDispatch();
 
   const formikCambiarContrasena = useFormik({
@@ -19,7 +19,15 @@ const FormChangePasswordProfile = ({usuario}) => {
       confirmPassword: "",
     },
     validationSchema: Yup.object({
-      password: Yup.string()
+      old_password: Yup.string()
+        .min(8, "La contraseña debe tener al menos 8 caracteres")
+        .max(16, "La contraseña debe tener menos de 16 caracteres")
+        .required("La contraseña es requerida")
+        .matches(
+          Exp.passwordRegex,
+          "La contraseña debe tener al menos menos una Mayúscula, una Minúscula y un Número."
+        ),
+        new_password: Yup.string()
         .min(8, "La contraseña debe tener al menos 8 caracteres")
         .max(16, "La contraseña debe tener menos de 16 caracteres")
         .required("La contraseña es requerida")
@@ -29,7 +37,7 @@ const FormChangePasswordProfile = ({usuario}) => {
         ),
       confirmPassword: Yup.string()
         .oneOf(
-          [Yup.ref("usuarioContrasena"), null],
+          [Yup.ref("new_password"), null],
           "Las contraseñas deben coincidir"
         )
         .required("La confirmación de contraseña es requerida"),
@@ -39,7 +47,7 @@ const FormChangePasswordProfile = ({usuario}) => {
           alert(JSON.stringify(values, null, 2)); */
 
       //enviar datos a backend
-      dispatch(changePassword(values));
+      dispatch(changePassword({usuario: values, token}));
 
       //reseteo de formulario
       resetForm();
