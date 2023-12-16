@@ -21,13 +21,14 @@ import { cleanAlert, insertUser } from "../../Redux/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Asteroids from "../../Components/Asteroids";
 import ModalTermsAndConditions from "./ModalTermsAndConditions";
+import Spinner from "../../Components/Spinner";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //manejo de alertas
-  const { errorRedux, message } = useSelector((state) => state.user);
+  const { errorRedux, message, loading } = useSelector((state) => state.user);
 
   const formik = useFormik({
     initialValues: {
@@ -139,208 +140,215 @@ const Register = () => {
               </div>
 
               <h2 className="text-center text-primary">
-                Registra tu cuenta gratis
+                {!loading ? " Registra tu cuenta gratis" : "Registrando cuenta"}
               </h2>
-              <form onSubmit={formik.handleSubmit}>
-                {/* username */}
-                <div className="">
-                  <div className="efecto my-3 d-flex align-items-center justify-content-center ">
-                    <LiaUserTagSolid className={`mx-2  icon`} />
-                    <input
-                      className="effect-1"
-                      type="text"
-                      placeholder="Usuario"
-                      id="username"
-                      name="username"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.username}
-                      autoComplete="off"
-                    />
 
-                    <span className="focus-border"></span>
-                  </div>
-
-                  {formik.touched.username && formik.errors.username && (
-                    <div className="error_form-container row">
-                      <ErrorForm message={formik.errors.username} />
-                    </div>
-                  )}
+              {loading ? (
+                <div className="py-5">
+                  <Spinner />
                 </div>
+              ) : (
+                <form onSubmit={formik.handleSubmit}>
+                  {/* username */}
+                  <div className="">
+                    <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                      <LiaUserTagSolid className={`mx-2  icon`} />
+                      <input
+                        className="effect-1"
+                        type="text"
+                        placeholder="Usuario"
+                        id="username"
+                        name="username"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.username}
+                        autoComplete="off"
+                      />
 
-                {/* name */}
-                <div className="">
-                  <div className="efecto my-3 d-flex align-items-center justify-content-center ">
-                    <LiaUserSolid className={`mx-2  icon`} />
-                    <input
-                      className="effect-1"
-                      type="text"
-                      placeholder="Nombre"
-                      id="first_name"
-                      name="first_name"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.first_name}
-                      autoComplete="off"
-                    />
-
-                    <span className="focus-border"></span>
-                  </div>
-
-                  {formik.touched.first_name && formik.errors.first_name && (
-                    <div className="error_form-container row">
-                      <ErrorForm message={formik.errors.first_name} />
+                      <span className="focus-border"></span>
                     </div>
-                  )}
-                </div>
 
-                {/* last name */}
-                <div className="">
-                  <div className="efecto my-3 d-flex align-items-center justify-content-center ">
-                    <LiaUserFriendsSolid className={`mx-2  icon`} />
-
-                    <input
-                      className="effect-1"
-                      type="text"
-                      placeholder="Apellidos"
-                      id="last_name"
-                      name="last_name"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.last_name}
-                      autoComplete="off"
-                    />
-
-                    <span className="focus-border"></span>
-                  </div>
-
-                  {formik.touched.last_name && formik.errors.last_name && (
-                    <div className="error_form-container row">
-                      <ErrorForm message={formik.errors.last_name} />
-                    </div>
-                  )}
-                </div>
-
-                {/* email */}
-                <div className="">
-                  <div className="efecto my-3 d-flex align-items-center justify-content-center ">
-                    <MdOutlineEmail className={`mx-2  icon`} />
-                    <input
-                      className="effect-1"
-                      type="email"
-                      placeholder="Correo electronico"
-                      id="email"
-                      name="email"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.email}
-                      autoComplete="off"
-                    />
-
-                    <span className="focus-border"></span>
-                  </div>
-
-                  {formik.touched.email && formik.errors.email && (
-                    <div className="error_form-container row">
-                      <ErrorForm message={formik.errors.email} />
-                    </div>
-                  )}
-                </div>
-
-                {/* contraseña */}
-                <div className="">
-                  <div className="efecto my-3 d-flex align-items-center justify-content-center ">
-                    <CgPassword className=" mx-2 icon" />
-                    <input
-                      className="effect-1 "
-                      type="password"
-                      placeholder="Contraseña"
-                      id="password"
-                      name="password"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.password}
-                      autoComplete="off"
-                    />
-                    <span className="focus-border"></span>
-                  </div>
-
-                  {formik.touched.password && formik.errors.password && (
-                    <div className="error_form-container">
-                      <ErrorForm message={formik.errors.password} />
-                    </div>
-                  )}
-                </div>
-
-                {/* repetir contraseña */}
-                <div className="">
-                  <div className="efecto my-3 d-flex align-items-center justify-content-center ">
-                    <CgPassword className=" mx-2 icon" />
-                    <input
-                      className="effect-1 "
-                      type="password"
-                      placeholder="Confirmar contraseña"
-                      id="passwordConfirm"
-                      name="passwordConfirm"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.passwordConfirm}
-                      autoComplete="off"
-                    />
-                    <span className="focus-border"></span>
-                  </div>
-
-                  {formik.touched.passwordConfirm &&
-                    formik.errors.passwordConfirm && (
-                      <div className="error_form-container">
-                        <ErrorForm message={formik.errors.passwordConfirm} />
+                    {formik.touched.username && formik.errors.username && (
+                      <div className="error_form-container row">
+                        <ErrorForm message={formik.errors.username} />
                       </div>
                     )}
-                </div>
-
-                {/* terminos y condiciones */}
-                <div className="text-dark mx-4 pt-3">
-                  <input
-                    type="checkbox"
-                    name="termsAndConditions"
-                    id="termsAndConditions"
-                    className="mx-3 mb-2"
-                    {...formik.getFieldProps("termsAndConditions")}
-                  />
-                  <label
-                    className=" border-bottom border-black fw-bold"
-                    htmlFor="termsAndConditions"
-                    style={{ cursor: "pointer" }}
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalTermsAndConditions"
-                  >
-                    Aceptar términos y condiciones
-                  </label>
-                  {formik.touched.termsAndConditions &&
-                    formik.errors.termsAndConditions && (
-                      <ErrorForm message={formik.errors.termsAndConditions} />
-                    )}
-                </div>
-
-                {/* Boton de registrar */}
-                <div className="text-center  w-50 m-auto pt-3">
-                  <button
-                    type="submit"
-                    className="text-white mb-4 w-100 p-2 rounded gradient-custom-2 hover"
-                  >
-                    Crear cuenta
-                  </button>
-                </div>
-
-                {/* enlaces */}
-                <div className="row ">
-                  <div className="d-flex col justify-content-center mb-3">
-                    <Link className="text-muted mx-2" to={"/login"}>
-                      Ya tienes cuenta?
-                    </Link>
                   </div>
-                </div>
-              </form>
+
+                  {/* name */}
+                  <div className="">
+                    <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                      <LiaUserSolid className={`mx-2  icon`} />
+                      <input
+                        className="effect-1"
+                        type="text"
+                        placeholder="Nombre"
+                        id="first_name"
+                        name="first_name"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.first_name}
+                        autoComplete="off"
+                      />
+
+                      <span className="focus-border"></span>
+                    </div>
+
+                    {formik.touched.first_name && formik.errors.first_name && (
+                      <div className="error_form-container row">
+                        <ErrorForm message={formik.errors.first_name} />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* last name */}
+                  <div className="">
+                    <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                      <LiaUserFriendsSolid className={`mx-2  icon`} />
+
+                      <input
+                        className="effect-1"
+                        type="text"
+                        placeholder="Apellidos"
+                        id="last_name"
+                        name="last_name"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.last_name}
+                        autoComplete="off"
+                      />
+
+                      <span className="focus-border"></span>
+                    </div>
+
+                    {formik.touched.last_name && formik.errors.last_name && (
+                      <div className="error_form-container row">
+                        <ErrorForm message={formik.errors.last_name} />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* email */}
+                  <div className="">
+                    <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                      <MdOutlineEmail className={`mx-2  icon`} />
+                      <input
+                        className="effect-1"
+                        type="email"
+                        placeholder="Correo electronico"
+                        id="email"
+                        name="email"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}
+                        autoComplete="off"
+                      />
+
+                      <span className="focus-border"></span>
+                    </div>
+
+                    {formik.touched.email && formik.errors.email && (
+                      <div className="error_form-container row">
+                        <ErrorForm message={formik.errors.email} />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* contraseña */}
+                  <div className="">
+                    <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                      <CgPassword className=" mx-2 icon" />
+                      <input
+                        className="effect-1 "
+                        type="password"
+                        placeholder="Contraseña"
+                        id="password"
+                        name="password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
+                        autoComplete="off"
+                      />
+                      <span className="focus-border"></span>
+                    </div>
+
+                    {formik.touched.password && formik.errors.password && (
+                      <div className="error_form-container">
+                        <ErrorForm message={formik.errors.password} />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* repetir contraseña */}
+                  <div className="">
+                    <div className="efecto my-3 d-flex align-items-center justify-content-center ">
+                      <CgPassword className=" mx-2 icon" />
+                      <input
+                        className="effect-1 "
+                        type="password"
+                        placeholder="Confirmar contraseña"
+                        id="passwordConfirm"
+                        name="passwordConfirm"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.passwordConfirm}
+                        autoComplete="off"
+                      />
+                      <span className="focus-border"></span>
+                    </div>
+
+                    {formik.touched.passwordConfirm &&
+                      formik.errors.passwordConfirm && (
+                        <div className="error_form-container">
+                          <ErrorForm message={formik.errors.passwordConfirm} />
+                        </div>
+                      )}
+                  </div>
+
+                  {/* terminos y condiciones */}
+                  <div className="text-dark mx-4 pt-3">
+                    <input
+                      type="checkbox"
+                      name="termsAndConditions"
+                      id="termsAndConditions"
+                      className="mx-3 mb-2"
+                      {...formik.getFieldProps("termsAndConditions")}
+                    />
+                    <label
+                      className=" border-bottom border-black fw-bold"
+                      htmlFor="termsAndConditions"
+                      style={{ cursor: "pointer" }}
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalTermsAndConditions"
+                    >
+                      Aceptar términos y condiciones
+                    </label>
+                    {formik.touched.termsAndConditions &&
+                      formik.errors.termsAndConditions && (
+                        <ErrorForm message={formik.errors.termsAndConditions} />
+                      )}
+                  </div>
+
+                  {/* Boton de registrar */}
+                  <div className="text-center  w-50 m-auto pt-3">
+                    <button
+                      type="submit"
+                      className="text-white mb-4 w-100 p-2 rounded gradient-custom-2 hover"
+                    >
+                      Crear cuenta
+                    </button>
+                  </div>
+
+                  {/* enlaces */}
+                  <div className="row ">
+                    <div className="d-flex col justify-content-center mb-3">
+                      <Link className="text-muted mx-2" to={"/login"}>
+                        Ya tienes cuenta?
+                      </Link>
+                    </div>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
 

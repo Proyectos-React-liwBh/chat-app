@@ -8,6 +8,7 @@ const Spinner = () => {
             <span></span>
           </div>
         </div>
+        <small className="text-center mt-2">Por favor espere un momento...</small>
       </div>
     </div>
   );

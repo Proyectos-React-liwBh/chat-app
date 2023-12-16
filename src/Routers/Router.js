@@ -7,8 +7,9 @@ import Error404 from "../Pages/Error404";
 import Rooms from "../Pages/Rooms/Rooms";
 import Room from "../Pages/Room/Room";
 import Profile from "../Pages/Profile/Profile";
-import Forgot from "../Pages/forgot";
+import Forgot from "../Pages/Forgot";
 import Activate from "../Pages/Activate";
+import ChangePassword from "../Pages/ChangePassword";
 
 //rutas
 export const routerApp = [
@@ -38,6 +39,10 @@ export const routerApp = [
     {
         path: "/forgot-password",
         component: Forgot,
+    },
+    {
+        path: "/change-password/:otp",
+        component: ChangePassword,
     },
     {
         path: "/activate/:otp",

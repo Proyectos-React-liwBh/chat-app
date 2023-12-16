@@ -79,6 +79,27 @@ export const changePassword = createAsyncThunk(
   }
 );
 
+export const changePassword2 = createAsyncThunk(
+  "user/changePassword2",
+
+  async (data) => {
+
+    console.log(data)
+
+    const response = await fetch("http://127.0.0.1:8000/api/auth/change-password/", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+      }),
+    });
+
+    return response.json();
+  }
+);
+
 //eliminar usuario
 export const deleteUser = createAsyncThunk(
   "user/deleteUser",
@@ -138,6 +159,23 @@ export const partialUpdateUser = createAsyncThunk(
 );
 
 //Todo no requeren token, ni petición al servidor
+export const forgotPassword = createAsyncThunk(
+  "user/forgotPassword",
+  async (data) => {
+    const response = await fetch("http://127.0.0.1:8000/api/auth/change-password/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+      }),
+    });
+
+    return response.json();
+  }
+);
+
 export const getSessionUser = createAsyncThunk(
   "user/setSesionUsuario",
 
@@ -231,6 +269,26 @@ const userSlice = createSlice({
       state.errorRedux = "Ocurrio un error al verificar el usuario";
     });
 
+    //recuperar contraseña
+    builder.addCase(forgotPassword.pending, (state) => {
+      state.loading = true;
+      state.errorRedux = null;
+      state.message = "";
+    });
+    builder.addCase(forgotPassword.fulfilled, (state, action) => {
+      //console.log(action.payload)
+      if (action.payload.message) {
+        state.message = action.payload.message;
+      } else {
+        state.errorRedux = action.payload.error;
+      }
+      state.loading = false;
+    });
+    builder.addCase(forgotPassword.rejected, (state) => {
+      state.loading = false;
+      state.errorRedux = "Ocurrio un error al recuperar contraseña";
+    });
+
     // logear usuario
     builder.addCase(loginUser.pending, (state) => {
       state.loading = true;
@@ -285,6 +343,26 @@ const userSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(changePassword.rejected, (state) => {
+      state.loading = false;
+      state.errorRedux = "Ocurrio un error al cambiar contraseña";
+    });
+
+    //restablecer contraseña
+    builder.addCase(changePassword2.pending, (state) => {
+      state.loading = true;
+      state.errorRedux = null;
+      state.message = "";
+    });
+    builder.addCase(changePassword2.fulfilled, (state, action) => {
+      console.log(action.payload)
+      if (action.payload.message) {
+        state.message = action.payload.message;
+      } else {
+        state.errorRedux = action.payload.error;
+      }
+      state.loading = false;
+    });
+    builder.addCase(changePassword2.rejected, (state) => {
       state.loading = false;
       state.errorRedux = "Ocurrio un error al cambiar contraseña";
     });

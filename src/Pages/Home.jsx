@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../Components/Layout";
 import Spinner from "../Components/Spinner";
 import Pagination from "@mui/material/Pagination";
@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import { FaUsers } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import CardRoom from "./Card/CardRoom";
+
+import { data } from "../assets/JS/scripts";
 
 const Home = () => {
   const [listRooms, setListRooms] = useState([]);
@@ -27,18 +29,23 @@ const Home = () => {
     return nombre.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
+  //! temporal cargar datos de salas
+  useEffect(() => {
+    setListRooms(data);
+  }, []);
+
   return (
     <Layout>
       {/* header */}
       <header className="container__header_home ">
-          <div className="image__header_home">
-            <div className="content__header_home"></div>
-            <h3 className="title__header_home">
-              La geolocalización agrupan las especies según la provincia y
-              cantón
-            </h3>
-          </div>
-        </header>
+        <div className="image__header_home">
+          <div className="content__header_home"></div>
+          <h3 className="title__header_home">
+            Descubre la libertad de expresión en nuestra aplicación de chat por
+            salas públicas. 
+          </h3>
+        </div>
+      </header>
 
       <section className="container py-5">
         <div className="row py-2 d-flex justify-content-between">
