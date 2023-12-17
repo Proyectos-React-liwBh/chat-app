@@ -36,9 +36,29 @@ const Room = () => {
                   <span>{room.name}</span>
                 </h3>
               </div>
+            </div>
+            {/* detalles */}
+            <div className="row">
               <div className="col-12 col-md-6">
+                <img
+                  src={room.image}
+                  alt={room.name}
+                  className="img-fluid rounded"
+                />
+              </div>
+
+              <div className="col-12 col-md-6 mt-4 mt-md-0 d-flex flex-column">
+                <h5 className="d-flex align-items-center text-secondary">
+                  <TiDocumentText className="me-3 fs-3" />{" "}
+                  <span className="fw-bold">Descripción</span>
+                </h5>
+
+                <p className="text-muted flex-grow-1 py-5">{room.description}</p>
+
+                {/* creador */}
+                <div className="">
                 <div className="py-3 d-flex justify-content-start align-items-center">
-                  <h5 className="me-3">Creada por: </h5>
+                  <span className="me-3">Creada por: </span>
 
                   <img
                     className="img-fluid me-2"
@@ -51,54 +71,45 @@ const Room = () => {
                   <span className="fw-bold">{room.user.first_name}</span>
                 </div>
               </div>
-            </div>
-            {/* detalles */}
-            <div className="row">
-              <div className="col-12 col-md-6 d-flex justify-content-center align-items-center">
-                <img src={room.image} alt={room.name} className="img-fluid" />
-              </div>
-
-              <div className="col-12 col-md-6 mt-4 mt-md-0">
-                <h5 className="d-flex align-items-center text-secondary">
-                  <TiDocumentText className="me-3 fs-3" />{" "}
-                  <span className="fw-bold">Descripción</span>
-                </h5>
-
-                <p className="text-muted py-5">{room.description}</p>
 
                 {/*conectados - seguir */}
-                <div className="d-flex align-items-center justify-content-between pt-3 ">
-                  <div className="d-flex align-items-center">
-                    <BiSolidCircle
-                      className={`fs-4 ${
-                        room.users_count > 0 ? "text-success" : "text-danger"
-                      }`}
-                    />
-                    <span className="ms-2 text-muted small">
-                      Conectados: {room.users_count}
-                    </span>
-                  </div>
+                <div className="pt-3 pt-md-0">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex align-items-center">
+                      <BiSolidCircle
+                        className={`fs-4 ${
+                          room.users_count > 0 ? "text-success" : "text-danger"
+                        }`}
+                      />
+                      <span className="ms-2 text-muted small">
+                        Conectados: {room.users_count}
+                      </span>
+                    </div>
 
-                  <div className="d-flex align-items-center">
-                    <button className="btn btn-dark d-flex align-items-center">
-                      <MdOutlineLibraryAdd className="me-2 fs-5" />
-                      <small>Seguir</small>
-                    </button>
+                    <div className="d-flex align-items-center">
+                      <button className="btn btn-dark d-flex align-items-center">
+                        <MdOutlineLibraryAdd className="me-2 fs-5" />
+                        <small>Seguir</small>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
 
+            {/* fechas */}
+            <div className="row">
               {/* fecha creacion */}
               <div className="col-6 pt-3">
-                <p className="text-muted small text-center">
+                <p className="text-muted small d-flex justify-content-start">
                   Creado el {UseDate(room.create_at)}
                 </p>
               </div>
 
               {/* fecha actualizacion */}
               {room.create_at !== room.update_at && (
-                <div className="col-6 pt-3">
-                  <p className="text-muted small text-center">
+                <div className="col-6 pt-3 d-flex justify-content-end">
+                  <p className="text-muted small ">
                     Actualizado el {UseDate(room.update_at)}
                   </p>
                 </div>

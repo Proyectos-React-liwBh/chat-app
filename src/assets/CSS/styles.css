@@ -632,6 +632,11 @@ input[type="text"] {
 !#####################################################################
 */
 
+.room-detail{
+  position: relative;
+  bottom: 0;
+}
+
 .min-vh-50{
   min-height: 50vh;
 }
