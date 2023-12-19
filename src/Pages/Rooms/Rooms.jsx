@@ -1,61 +1,77 @@
+import { useEffect } from "react";
 import Layout from "../../Components/Layout";
-import { IoMdAdd } from "react-icons/io";
 import TableMyRooms from "./TableMyRooms";
-import { Tab } from "@mui/material";
-import TableFolowRooms from "./TableFolowRooms";
+import TableFollowRooms from "./TableFollowRooms";
+import { useDispatch, useSelector } from "react-redux";
+import { cleanAlert, getMyRooms, getFollowRooms } from "../../Redux/RoomSlice";
+import {
+  SweetAlertError,
+  SweetAlertSuccess,
+} from "../../assets/SweetAlert/SweetAlert";
 
 const Rooms = () => {
-  const rooms = [
-    {
-      id: 1,
-      name: "Programación en Python",
-      description: "Grupo para aprender python",
-      image: "https://picsum.photos/200",
-    },
-  ];
+  const dispatch = useDispatch();
 
-  const roomsMember = [
-    {
-      id: 1,
-      name: "Programación en C#",
-      description: "Grupo para aprender C#",
-      image: "https://picsum.photos/200",
-    },
-  ];
+  const { message, errorRedux, rooms, roomsFollow } = useSelector(
+    (state) => state.room
+  );
+
+  const { token } = useSelector((state) => state.user);
+
+  //console.log("token", token);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getMyRooms(token));
+
+      dispatch(getFollowRooms(token));
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (message) {
+      SweetAlertSuccess(message);
+      dispatch(cleanAlert());
+
+      //actualizar datos
+      dispatch(getMyRooms(token));
+      dispatch(getFollowRooms(token));
+    }
+
+    if (errorRedux) {
+      SweetAlertError(errorRedux);
+      dispatch(cleanAlert());
+    }
+  }, [message, errorRedux]);
 
   return (
     <div className="bg-rooms">
-    <Layout>
-      <section className="py-3">
-        <h2 className="text-white">Salas Creadas</h2>
+      <Layout>
+        <section className="py-3">
+          <h2 className="text-white">Salas Creadas</h2>
 
-        {rooms.length === 0 ? (
-          <div className="text-muted py-5">
-            Actualmente no tienes salas creadas 😋, crea una sobre un tema de tu
-            interés 🤩.
-          </div>
-        ) : (
           <div>
             <TableMyRooms rooms={rooms} />
           </div>
-        )}
-      </section>
-      <hr className="bg-white text-white"/>
-      <section className="py-3">
-        <h2 className="text-white">Salas Miembro</h2>
+        </section>
+        <hr className="bg-white text-white" />
+        <section className="py-3">
+          <h2 className="text-white">Salas Miembro</h2>
 
-        {roomsMember.length === 0 ? (
-          <div className="text-muted py-5">
-            Actualmente no eres miembro de ninguna sala 😔, únete a una sobre un
-            tema de tu interés 🫡.
-          </div>
-        ) : (
-          <div>
-            <TableFolowRooms rooms={roomsMember} />
-          </div>
-        )}
-      </section>
-    </Layout>
+          {roomsFollow.length === 0 ? (
+            <div className="py-5">
+              <p className="text-white border border-1 border-secondary fw-bold text-center p-3 bg-dark rounded">
+                Actualmente no eres miembro de ninguna sala 😔, únete a una
+                sobre un tema de tu interés 🫡.
+              </p>
+            </div>
+          ) : (
+            <div>
+              <TableFollowRooms rooms={roomsFollow} />
+            </div>
+          )}
+        </section>
+      </Layout>
     </div>
   );
 };

@@ -62,3 +62,14 @@ Principales caracteristicas:
 * documentación: https://formik.org/docs/overview
 * useFormik documentación: https://formik.org/docs/api/useFormik
 * useFormik ejemplos: https://dev.to/franklin030601/formularios-dinamicos-con-formik-y-react-js-4hne
+
+### Dropzone
+* URL: https://react-dropzone.js.org/
+* Comandos:
+   - ```npm install react-dropzone --save```
+
+
+### Socket IO
+* URL: 
+* Comandos: 
+   - ```npm install socket.io-client```

@@ -218,7 +218,7 @@ export const cleanAlert = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: [],
+    user: {},
     userCurrent: {},
     userSession: null,
     token: null,

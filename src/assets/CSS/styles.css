@@ -670,3 +670,92 @@ input[type="text"] {
   width: 100%;
   padding: 0.5rem;
 }
+
+
+.bg-chat{
+  background: #f0efef;
+  background-image: url("../../assets/Image/comments.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+}
+
+/* 
+!#####################################################################
+?Dropzone
+!#####################################################################
+*/
+.error_dropzone {
+  margin-top: 1rem;
+  text-align: center;
+  color: #ff1744;
+}
+
+.previo_image_dropzone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  color: white;
+}
+
+.previo_image_dropzone img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.dropzone-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropzone-delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: rgb(208, 76, 76);
+}
+
+.dropzone-delete-button:hover {
+  background-color: rgba(255, 255, 255, 1);
+  color: rgb(253, 31, 31);
+}
+
+/* Estilos base */
+.baseStyle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-width: 2px;
+  border-radius: 0.5rem;
+  margin: 0;
+  border-color: #eeeeee;
+  border-style: dashed;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #bdbdbd;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Estilos cuando está enfocado */
+.focusedStyle {
+  border-color: #2196f3;
+}
+
+/* Estilos cuando se acepta la imagen */
+.acceptStyle {
+  border-color: #00e676;
+}
+
+/* Estilos cuando se rechaza la imagen */
+.rejectStyle {
+  border-color: #ff1744;
+}

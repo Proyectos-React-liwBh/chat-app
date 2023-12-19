@@ -50,8 +50,8 @@ export const SweetAlertQuestion = ( title, message, funtion, messageResponse) =>
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Confirm',
-    cancelButtonText: 'Cancel'
+    confirmButtonText: 'Confirmar',
+    cancelButtonText: 'Cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
       //ejecutar funcion
@@ -63,16 +63,16 @@ export const SweetAlertQuestion = ( title, message, funtion, messageResponse) =>
   
 
 }
-export const SweetAlertEliminar = (elemento, eliminarFuncion) => {
+export const SweetAlertEliminar = (eliminarTexto, eliminarFuncion) => {
   Swal.fire({
-    title: "Delete",
-    text: `Are you sure you want to delete ${elemento}?`,
+    title: "Eliminar",
+    text: eliminarTexto,
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Delete',
-    cancelButtonText: 'Cancel'
+    confirmButtonColor:'#d33',
+    cancelButtonColor: '#000000',
+    confirmButtonText: 'Eliminar',
+    cancelButtonText: 'Cancelar'
   }).then((resultado) => {
     if (resultado.isConfirmed) {
       // Ejecutar la función de eliminación
@@ -98,8 +98,8 @@ export const SweetAlertConfirm = (title, text, funcionAceptar, funcionCancelar) 
     showCancelButton: true,
     confirmButtonColor: '#52BE80',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Accept',
-    cancelButtonText: 'Cancel'
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
       funcionAceptar();

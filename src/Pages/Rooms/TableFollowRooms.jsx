@@ -1,13 +1,20 @@
-import { useEffect, useState, useMemo } from "react";
+/* eslint-disable react/prop-types */
+import { useMemo } from "react";
 import { MaterialReactTable } from "material-react-table";
 import { MRT_Localization_ES } from "material-react-table/locales/es";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { unfollowRoom } from "../../Redux/RoomSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { SweetAlertEliminar } from "../../assets/SweetAlert/SweetAlert";
 
-const TableFolowRooms = ({ rooms }) => {
+const TableFollowRooms = ({ rooms }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { token } = useSelector((state) => state.user);
 
   const limitDescription = (description) => {
     if (description.length > 50) {
@@ -36,8 +43,10 @@ const TableFolowRooms = ({ rooms }) => {
     []
   );
 
-  const handleDelete = (row) => {
-    console.log(row);
+  const handleDelete = (room) => {
+    SweetAlertEliminar(`¿Estas seguro que quieres dejar de seguir la sala ${room.name}?`, () => {
+      dispatch(unfollowRoom({ id:room.id, token }));
+    });
   };
 
   const handleGo = (row) => {
@@ -58,7 +67,6 @@ const TableFolowRooms = ({ rooms }) => {
         options={{
           exportButton: true,
         }}
-        
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
             <Tooltip arrow placement="left" title="Entrar a sala">
@@ -84,4 +92,4 @@ const TableFolowRooms = ({ rooms }) => {
   );
 };
 
-export default TableFolowRooms;
+export default TableFollowRooms;

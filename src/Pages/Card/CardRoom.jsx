@@ -7,12 +7,20 @@ const CardRoom = ({ room }) => {
   const navigate = useNavigate();
   const [showDescription, setShowDescription] = useState(false);
 
+  const limitName = (name) => {
+    if (name.length > 20) {
+      return `${name.substring(0, 20)}...`;
+    } else {
+      return name;
+    }
+  };
+
   return (
     <div className="">
       <div className="card-room">
         <div className="card shadow">
           <div className="card-body">
-            <h4 className="card-title text-center">{room.name}</h4>
+            <h4 className="card-title text-center">{limitName(room.name)}</h4>
 
             <div className="card-room-img">
               <img
@@ -25,7 +33,7 @@ const CardRoom = ({ room }) => {
                   showDescription ? "d-block" : "d-none"
                 }`}
               >
-                <p className="text-center">{room.description}</p>
+                <p className="text-center overflow-y-auto">{room.description}</p>
               </div>
             </div>
 

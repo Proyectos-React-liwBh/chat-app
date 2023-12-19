@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import Layout from "../Components/Layout";
 import Spinner from "../Components/Spinner";
@@ -7,11 +8,15 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import { FaUsers } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { listAllRooms } from "../Redux/RoomSlice";
 import CardRoom from "./Card/CardRoom";
 
-import { data } from "../assets/JS/scripts";
-
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const { token } = useSelector((state) => state.user);
+
   const [listRooms, setListRooms] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   /* paginacion */
@@ -29,10 +34,13 @@ const Home = () => {
     return nombre.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
-  //! temporal cargar datos de salas
   useEffect(() => {
-    setListRooms(data);
-  }, []);
+    if (token) {
+      dispatch(listAllRooms(token)).then((state) => {
+        setListRooms([...state.payload.Rooms]);
+      });
+    }
+  }, [token]);
 
   return (
     <Layout>
@@ -42,7 +50,7 @@ const Home = () => {
           <div className="content__header_home"></div>
           <h3 className="title__header_home">
             Descubre la libertad de expresión en nuestra aplicación de chat por
-            salas públicas. 
+            salas públicas.
           </h3>
         </div>
       </header>

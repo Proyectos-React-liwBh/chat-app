@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import socketIOClient from "socket.io-client";
 import Layout from "../../Components/Layout";
-import { data2 } from "../../assets/JS/scripts";
 import Spinner from "../../Components/Spinner";
 import UseDate from "../../Hooks/UseDate";
 import { UseAvatarIcon } from "../../Hooks/UseAvatarIcon";
@@ -10,17 +10,67 @@ import { MdOutlineLibraryAdd } from "react-icons/md";
 import { LiaComments } from "react-icons/lia";
 import { FaPeopleRoof } from "react-icons/fa6";
 import NewComment from "./NewComment";
+import { useSelector, useDispatch } from "react-redux";
+import { getRoom, cleanAlert, followRoom } from "../../Redux/RoomSlice";
+import { useParams } from "react-router-dom";
+import {
+  SweetAlertError,
+  SweetAlertSuccess,
+} from "../../assets/SweetAlert/SweetAlert";
 
 const Room = () => {
-  console.log(data2);
+  const dispatch = useDispatch();
 
   const [room, setRoom] = useState(null);
+  const [usersCount, setUsersCount] = useState(0);
+
+  const { token, userSession } = useSelector((state) => state.user);
+  const { errorRedux, message } = useSelector((state) => state.room);
+  const { id } = useParams();
+
+  const handleFollow = () => {
+    dispatch(followRoom({ token, id }));
+  };
 
   useEffect(() => {
-    setRoom({ ...data2 });
-  }, []);
+    if (token) {
+      dispatch(getRoom({ token, id })).then((state) => {
+        setRoom({ ...state.payload.Room });
+      });
+    }
+  }, [token]);
 
-  console.log(room);
+  useEffect(() => {
+    if (errorRedux) {
+      SweetAlertError(errorRedux);
+      dispatch(cleanAlert());
+    }
+
+    if (message) {
+      SweetAlertSuccess(message);
+      dispatch(cleanAlert());
+    }
+  }, [errorRedux, message]);
+
+/*   useEffect(() => {
+    //crear conexion socket
+    const socket = socketIOClient("http://localhost:8000");
+
+    //crear evento si se conecta al socket
+    socket.on("connect", () => {
+      console.log("Conectado a WebSocket");
+    });
+
+    //se crea un evento para actualizar el contador de usuarios conectados
+    socket.on("update_users_count", (count) => {
+      setUsersCount(count);
+    });
+
+    //funcion para desconectar el socket, limpiando el evento
+    return () => {
+      socket.disconnect();
+    };
+  }, []); */
 
   return (
     <Layout>
@@ -53,24 +103,26 @@ const Room = () => {
                   <span className="fw-bold">Descripción</span>
                 </h5>
 
-                <p className="text-muted flex-grow-1 py-5">{room.description}</p>
+                <p className="text-muted flex-grow-1 py-5">
+                  {room.description}
+                </p>
 
                 {/* creador */}
                 <div className="">
-                <div className="py-3 d-flex justify-content-start align-items-center">
-                  <span className="me-3">Creada por: </span>
+                  <div className="py-3 d-flex justify-content-start align-items-center">
+                    <span className="me-3">Creada por: </span>
 
-                  <img
-                    className="img-fluid me-2"
-                    width={30}
-                    height={30}
-                    src={UseAvatarIcon(room.user.avatar).img}
-                    alt="Avatar de usuario"
-                  />
+                    <img
+                      className="img-fluid me-2"
+                      width={30}
+                      height={30}
+                      src={UseAvatarIcon(room.user.avatar).img}
+                      alt="Avatar de usuario"
+                    />
 
-                  <span className="fw-bold">{room.user.first_name}</span>
+                    <span className="fw-bold">{room.user.username}</span>
+                  </div>
                 </div>
-              </div>
 
                 {/*conectados - seguir */}
                 <div className="pt-3 pt-md-0">
@@ -78,20 +130,25 @@ const Room = () => {
                     <div className="d-flex align-items-center">
                       <BiSolidCircle
                         className={`fs-4 ${
-                          room.users_count > 0 ? "text-success" : "text-danger"
+                          usersCount > 0 ? "text-success" : "text-danger"
                         }`}
                       />
                       <span className="ms-2 text-muted small">
-                        Conectados: {room.users_count}
+                        Conectados: {usersCount}
                       </span>
                     </div>
 
-                    <div className="d-flex align-items-center">
-                      <button className="btn btn-dark d-flex align-items-center">
-                        <MdOutlineLibraryAdd className="me-2 fs-5" />
-                        <small>Seguir</small>
-                      </button>
-                    </div>
+                    {room.user.id !== userSession.id && (
+                      <div className="d-flex align-items-center">
+                        <button
+                          className="btn btn-dark d-flex align-items-center"
+                          onClick={handleFollow}
+                        >
+                          <MdOutlineLibraryAdd className="me-2 fs-5" />
+                          <small>Seguir</small>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -102,15 +159,15 @@ const Room = () => {
               {/* fecha creacion */}
               <div className="col-6 pt-3">
                 <p className="text-muted small d-flex justify-content-start">
-                  Creado el {UseDate(room.create_at)}
+                  Creado el {UseDate(room.created_at)}
                 </p>
               </div>
 
               {/* fecha actualizacion */}
-              {room.create_at !== room.update_at && (
+              {room.created_at !== room.updated_at && (
                 <div className="col-6 pt-3 d-flex justify-content-end">
                   <p className="text-muted small ">
-                    Actualizado el {UseDate(room.update_at)}
+                    Actualizado el {UseDate(room.updated_at)}
                   </p>
                 </div>
               )}
@@ -122,7 +179,7 @@ const Room = () => {
             <h3 className="display-6 py-2">
               <LiaComments /> Comentarios
             </h3>
-            <div className="box-chat bg-light shadow rounded min-vh-50 overflow-y-auto">
+            <div className="box-chat bg-chat shadow rounded min-vh-50 overflow-y-auto">
               <NewComment />
             </div>
           </section>
