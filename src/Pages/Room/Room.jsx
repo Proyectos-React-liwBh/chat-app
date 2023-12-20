@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import socketIOClient from "socket.io-client";
 import Layout from "../../Components/Layout";
 import Spinner from "../../Components/Spinner";
 import UseDate from "../../Hooks/UseDate";
@@ -17,6 +16,7 @@ import {
   SweetAlertError,
   SweetAlertSuccess,
 } from "../../assets/SweetAlert/SweetAlert";
+import { Socket } from "socket.io-client";
 
 const Room = () => {
   const dispatch = useDispatch();
@@ -52,20 +52,17 @@ const Room = () => {
     }
   }, [errorRedux, message]);
 
-
   useEffect(() => {
-
     // Conectar al WebSocket al entrar a la sala
-    //const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/`);
     const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/${id}/`);
 
     // Manejar la apertura de la conexión
-    websocket.onopen = async () => {
+    websocket.onopen = () => {
       // Enviar un mensaje de inicialización con el ID de la sala
       websocket.send(
         JSON.stringify({
-          type: "init",
-          room_id: id,
+          type: "add_user",
+          message: "Nuevo usuario",
         })
       );
     };
@@ -83,10 +80,12 @@ const Room = () => {
 
     // Desconectar el WebSocket al salir de la sala
     return () => {
-      console.log("desconectado socket")
-      websocket.close();
+      //evitar que se desconecte el socket al recargar la pagina
+      //if (websocket.readyState === websocket.CONNECTING) {
+        websocket.close();
+        console.log("desconectado socket");
+      //}
     };
-  
   }, []);
 
   return (

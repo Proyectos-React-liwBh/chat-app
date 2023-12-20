@@ -40,11 +40,11 @@ const CardRoom = ({ room }) => {
             <div className="py-2 d-flex justify-content-center align-items-center">
               <BiSolidCircle
                 className={`fs-4 ${
-                  room.users_count > 0 ? "text-success" : "text-danger"
+                  room.user_count > 0 ? "text-success" : "text-danger"
                 }`}
               />
               <span className="ms-2 text-muted small">
-                Conectados: {room.users_count}
+                Conectados: {room.user_count}
               </span>
             </div>
 
