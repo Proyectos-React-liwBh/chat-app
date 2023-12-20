@@ -52,12 +52,15 @@ const Room = () => {
     }
   }, [errorRedux, message]);
 
+
   useEffect(() => {
+
     // Conectar al WebSocket al entrar a la sala
-    const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/`);
+    //const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/`);
+    const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/${id}/`);
 
     // Manejar la apertura de la conexión
-    websocket.onopen = () => {
+    websocket.onopen = async () => {
       // Enviar un mensaje de inicialización con el ID de la sala
       websocket.send(
         JSON.stringify({
@@ -67,47 +70,23 @@ const Room = () => {
       );
     };
 
-    /* websocket.onclose = () => {
-      websocket.send(JSON.stringify({
-        type: 'close',
-        room_id: id
-      }));
-    }; */
-
     // Manejar los mensajes recibidos
-    websocket.onmessage = (e) => {
-      let data = JSON.parse(e.data);
+    websocket.onmessage = async (e) => {
+      let data = await JSON.parse(e.data);
 
       console.log(data);
 
-      if (data.type === "connect") {
-        console.log(data.message);
+      if (data.user_count) {
+        setUsersCount(data.user_count);
       }
     };
 
-    // Agregar event listener para manejar el evento beforeunload
-    const handleBeforeUnload = () => {
-      // Enviar un mensaje de cierre antes de que la página se descargue o se cierre
-      websocket.send(
-        JSON.stringify({
-          type: "close",
-          room_id: id,
-        })
-      );
-      // Cerrar el WebSocket
-      websocket.close();
-    };
-
-    // Agregar el event listener
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
     // Desconectar el WebSocket al salir de la sala
     return () => {
-      // Remover el event listener antes de desmontar el componente
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-
+      console.log("desconectado socket")
       websocket.close();
     };
+  
   }, []);
 
   return (
