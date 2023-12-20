@@ -52,26 +52,35 @@ const Room = () => {
     }
   }, [errorRedux, message]);
 
-/*   useEffect(() => {
-    //crear conexion socket
-    const socket = socketIOClient("http://localhost:8000");
 
-    //crear evento si se conecta al socket
-    socket.on("connect", () => {
-      console.log("Conectado a WebSocket");
-    });
 
-    //se crea un evento para actualizar el contador de usuarios conectados
-    socket.on("update_users_count", (count) => {
-      setUsersCount(count);
-    });
+   useEffect(() => {
+    // Conectar al WebSocket al entrar a la sala
+    const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/`);
+    
+    // Manejar los mensajes recibidos
+    websocket.onmessage = (e) => {
+      let data = JSON.parse(e.data);
 
-    //funcion para desconectar el socket, limpiando el evento
-    return () => {
-      socket.disconnect();
+      console.log(data);
+
+      if (data.type === 'connect') {
+        console.log(data.message);
+      }
+
+      if (data.type === 'disconnect') {
+        console.log(data.message);
+      }
     };
-  }, []); */
 
+    // Desconectar el WebSocket al salir de la sala
+    return () => {
+      console.log("Desconectado del WebSocket")
+      websocket.close();
+    };
+  }, []);
+
+  
   return (
     <Layout>
       {room ? (
