@@ -52,35 +52,64 @@ const Room = () => {
     }
   }, [errorRedux, message]);
 
-
-
-   useEffect(() => {
+  useEffect(() => {
     // Conectar al WebSocket al entrar a la sala
     const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/`);
-    
+
+    // Manejar la apertura de la conexión
+    websocket.onopen = () => {
+      // Enviar un mensaje de inicialización con el ID de la sala
+      websocket.send(
+        JSON.stringify({
+          type: "init",
+          room_id: id,
+        })
+      );
+    };
+
+    /* websocket.onclose = () => {
+      websocket.send(JSON.stringify({
+        type: 'close',
+        room_id: id
+      }));
+    }; */
+
     // Manejar los mensajes recibidos
     websocket.onmessage = (e) => {
       let data = JSON.parse(e.data);
 
       console.log(data);
 
-      if (data.type === 'connect') {
-        console.log(data.message);
-      }
-
-      if (data.type === 'disconnect') {
+      if (data.type === "connect") {
         console.log(data.message);
       }
     };
 
+    // Agregar event listener para manejar el evento beforeunload
+    const handleBeforeUnload = () => {
+      // Enviar un mensaje de cierre antes de que la página se descargue o se cierre
+      websocket.send(
+        JSON.stringify({
+          type: "close",
+          room_id: id,
+        })
+      );
+      // Cerrar el WebSocket
+      websocket.close();
+    };
+
+    // Agregar el event listener
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
     // Desconectar el WebSocket al salir de la sala
     return () => {
-      console.log("Desconectado del WebSocket")
+      // Remover el event listener antes de desmontar el componente
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+
       websocket.close();
     };
   }, []);
 
-  
   return (
     <Layout>
       {room ? (
