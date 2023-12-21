@@ -67,9 +67,3 @@ Principales caracteristicas:
 * URL: https://react-dropzone.js.org/
 * Comandos:
    - ```npm install react-dropzone --save```
-
-
-### Socket IO
-* URL: 
-* Comandos: 
-   - ```npm install socket.io-client```

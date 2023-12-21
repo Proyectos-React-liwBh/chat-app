@@ -16,7 +16,6 @@ import {
   SweetAlertError,
   SweetAlertSuccess,
 } from "../../assets/SweetAlert/SweetAlert";
-import { Socket } from "socket.io-client";
 
 const Room = () => {
   const dispatch = useDispatch();
