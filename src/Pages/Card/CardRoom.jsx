@@ -27,25 +27,15 @@ const CardRoom = ({ room }) => {
     // Conectar al WebSocket al entrar a la sala
     const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/user_count/${room.id}/`);
 
-    // Manejar la apertura de la conexión
-    websocket.onopen = () => {
-      // Enviar un mensaje de inicialización con el ID de la sala
-      websocket.send(
-        JSON.stringify({
-          type: "add_user",
-          message: "Nuevo usuario",
-        })
-      );
-    };
-
     // Manejar los mensajes recibidos
     websocket.onmessage = async (e) => {
       let data = await JSON.parse(e.data);
 
       console.log(data);
-
-      if (data.user_count) {
-        setUsersCount(data.user_count);
+      
+      /* eslint-disable no-unused-vars */
+      if (data.user_count !== undefined) {
+        setUsersCount(prevUsersCount  => data.user_count);
       }
     };
 
