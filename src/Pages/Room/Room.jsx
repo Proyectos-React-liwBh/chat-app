@@ -80,11 +80,8 @@ const Room = () => {
 
     // Desconectar el WebSocket al salir de la sala
     return () => {
-      //evitar que se desconecte el socket al recargar la pagina
-      //if (websocket.readyState === websocket.CONNECTING) {
-        websocket.close();
-        console.log("desconectado socket");
-      //}
+      websocket.close();
+      console.log("desconectado socket");
     };
   }, []);
 
