@@ -67,3 +67,10 @@ Principales caracteristicas:
 * URL: https://react-dropzone.js.org/
 * Comandos:
    - ```npm install react-dropzone --save```
+
+### 
+* URL 1: ["codepen ejemplo 1"](https://codesandbox.io/p/sandbox/react-quill-with-functional-component-68zcnt?file=%2Fsrc%2Findex.js%3A10%2C22)
+* URL 2: [codepen ejemplo 2](https://codepen.io/alexkrolick/pen/xgyOXQ/left?editors=0010)
+* URL 3: ["NPM"](https://www.npmjs.com/package/react-quill)
+* Comandos: 
+   - ```npm i react-quill```
