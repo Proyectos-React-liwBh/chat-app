@@ -11,8 +11,6 @@ import {
   SweetAlertError,
   SweetAlertSuccess,
 } from "../../assets/SweetAlert/SweetAlert";
-import { data3 } from "../../assets/JS/scripts.js";
-import CardComment from "../Card/CardComment.jsx";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import DetailsRoom from "./DetailsRoom.jsx";
 import DetailsRoomFull from "./DetailsRoomFull.jsx";
@@ -68,8 +66,7 @@ const Room = () => {
     // Manejar los mensajes recibidos
     websocket.onmessage = async (e) => {
       let data = await JSON.parse(e.data);
-
-      console.log(data);
+      //console.log(data);
 
       if (data.user_count) {
         setUsersCount(data.user_count);

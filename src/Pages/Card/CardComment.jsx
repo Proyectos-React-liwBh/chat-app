@@ -2,17 +2,24 @@
 import { UseAvatarIcon } from "../../Hooks/UseAvatarIcon";
 import UseDate from "../../Hooks/UseDate";
 import { MdDelete, MdModeEdit } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SweetAlertEliminar } from "../../assets/SweetAlert/SweetAlert";
-
+import { deleteComment, setCommentCurrent } from "../../Redux/CommentSlice";
 
 const CardComment = ({ comment }) => {
+  const dispatch = useDispatch();
   const { userSession, token } = useSelector((state) => state.user);
+
+  //console.log(comment.content)
 
   const handleDelete = (comment) => {
     SweetAlertEliminar("¿Estas seguro de eliminar este comentario?", () => {
-      //dispatch(deleteComment({ token, id: comment.id }));
+      dispatch(deleteComment({ token, id: comment.id }));
     });
+  };
+
+  const handleEdit = (comment) => {
+    dispatch(setCommentCurrent(comment));
   };
 
   return (
@@ -44,7 +51,9 @@ const CardComment = ({ comment }) => {
           {/* botones */}
           {comment.user.id == userSession.id && (
             <div className="d-flex justify-content-end gap-2">
-              <MdModeEdit className="fs-4 cursor-pointer text-warning" />
+              <MdModeEdit className="fs-4 cursor-pointer text-warning" 
+              onClick={() => handleEdit(comment)}
+              />
               <MdDelete
                 className="fs-4 cursor-pointer text-danger"
                 onClick={() => handleDelete(comment)}

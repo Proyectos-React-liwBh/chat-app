@@ -50,7 +50,7 @@ export const deleteComment = createAsyncThunk(
 
   async (data) => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/comments/${data.room.id}/`,
+      `http://127.0.0.1:8000/api/comments/${data.id}/`,
       {
         method: "DELETE",
         headers: {
@@ -107,7 +107,12 @@ export const listComments = createAsyncThunk(
 export const setCommentCurrent = createAsyncThunk(
   "comment/setCommentCurrent",
   (data) => {
-    localStorage.setItem("commentCurrent", JSON.stringify({ ...data }));
+
+    if(data){
+        localStorage.setItem("commentCurrent", JSON.stringify({ ...data }));
+    }else{
+        localStorage.removeItem("commentCurrent");
+    }
 
     return {
       Comment: data,
@@ -138,7 +143,7 @@ const commentSlice = createSlice({
   name: "comment",
   initialState: {
     comments: [],
-    commentCurrent: {},
+    commentCurrent: null,
     message: "",
     loading: false,
     errorRedux: null,
@@ -173,7 +178,7 @@ const commentSlice = createSlice({
     });
     builder.addCase(listComments.fulfilled, (state, action) => {
       state.loading = false;
-      console.log(action.payload);
+      //console.log(action.payload);
       if (action.payload.Comments) {
         state.comments = [...action.payload.Comments];
       } else {
@@ -251,8 +256,9 @@ const commentSlice = createSlice({
       state.message = "";
     });
     builder.addCase(setCommentCurrent.fulfilled, (state, action) => {
+      //console.log(action.payload)
       state.loading = false;
-      state.commentCurrent = { ...action.payload.Comment };
+      state.commentCurrent = action.payload.Comment ? { ...action.payload.Comment } : null;
     });
     builder.addCase(setCommentCurrent.rejected, (state) => {
       state.loading = false;
