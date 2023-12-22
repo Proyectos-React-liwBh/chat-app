@@ -6,6 +6,8 @@ import ErrorForm from "../../Components/ErrorForm";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineClear } from "react-icons/ai";
 import { BiSend } from "react-icons/bi";
+import { createComment } from "../../Redux/CommentSlice";
+import DOMPurify from 'dompurify';
 
 const NewComment = ({ room }) => {
   const dispatch = useDispatch();
@@ -22,12 +24,14 @@ const NewComment = ({ room }) => {
       setValidations("El contenido no puede estar vacio!");
       return;
     }
+    const cleanedContent = DOMPurify.sanitize(content);
+    const comment = { content:cleanedContent, room_id: room.id };
 
-    console.log({ content, room_id: room.id, token });
-    alert(JSON.stringify({ content, room_id: room.id, token }, null, 2));
+    console.log(comment);
+    //alert(JSON.stringify(comment, null, 2));
 
     //enviar el comentario al servidor
-    //dispatch( createComment({ token, comment }));
+    dispatch( createComment({ token, comment }));
 
     //reseteo el valor del textarea
     setContent("");
@@ -56,7 +60,7 @@ const NewComment = ({ room }) => {
         { align: ["right", "center", "justify"] },
         { color: [] },
       ],
-      ["link"],
+      ["link", "code-block"],
       ["clean"],
     ],
     clipboard: {
@@ -79,6 +83,7 @@ const NewComment = ({ room }) => {
     "align",
     "color",
     "link",
+    "code-block",
     "clean",
   ];
 
@@ -102,13 +107,10 @@ const NewComment = ({ room }) => {
               className="btn border-0 bg-transparent react-quill-clear"
               type="button"
             >
-              <AiOutlineClear className="react-quill-clear-icon"/>
+              <AiOutlineClear className="react-quill-clear-icon" />
             </button>
-            <button
-              className="btn border-0 react-quill-send"
-              type="submit"
-            >
-              <BiSend className="fs-4 react-quill-send-icon"/>
+            <button className="btn border-0 react-quill-send" type="submit">
+              <BiSend className="fs-4 react-quill-send-icon" />
             </button>
           </div>
 

@@ -3,16 +3,32 @@ import { UseAvatarIcon } from "../../Hooks/UseAvatarIcon";
 import UseDate from "../../Hooks/UseDate";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { SweetAlertEliminar } from "../../assets/SweetAlert/SweetAlert";
+
 
 const CardComment = ({ comment }) => {
+  const { userSession, token } = useSelector((state) => state.user);
 
-  const { userSession } = useSelector((state) => state.user);
-
+  const handleDelete = (comment) => {
+    SweetAlertEliminar("¿Estas seguro de eliminar este comentario?", () => {
+      //dispatch(deleteComment({ token, id: comment.id }));
+    });
+  };
 
   return (
-    <div className={`card px-2 mx-3 ${comment.user.id != userSession.id ? "bg-card-comment-2" : "bg-card-comment"}`}>
+    <div
+      className={`card px-2 mx-3 ${
+        comment.user.id != userSession.id
+          ? "bg-card-comment-2"
+          : "bg-card-comment"
+      }`}
+    >
       <div className="card-body bg-transparent">
-        <div className={`card-header bg-transparent d-flex justify-content-between align-items-center border-bottom-1 ${comment.user.id == userSession.id ? "border-white" : "border-dark"}`}>
+        <div
+          className={`card-header bg-transparent d-flex justify-content-between align-items-center border-bottom-1 ${
+            comment.user.id == userSession.id ? "border-white" : "border-dark"
+          }`}
+        >
           {/* usuario creador */}
           <h5 className="card-title d-flex align-items-center">
             <img
@@ -26,27 +42,31 @@ const CardComment = ({ comment }) => {
             <span className="fw-bold ms-2">{comment.user.username}</span>
           </h5>
           {/* botones */}
-          {
-            comment.user.id == userSession.id && (
+          {comment.user.id == userSession.id && (
             <div className="d-flex justify-content-end gap-2">
               <MdModeEdit className="fs-4 cursor-pointer text-warning" />
-              <MdDelete className="fs-4 cursor-pointer text-danger" />
+              <MdDelete
+                className="fs-4 cursor-pointer text-danger"
+                onClick={() => handleDelete(comment)}
+              />
             </div>
-            )
-          }
+          )}
         </div>
-        <p className="card-text py-2">{comment.content}</p>
+        <div
+          className="card-text py-2"
+          dangerouslySetInnerHTML={{ __html: comment.content }}
+        />
 
         {/* fechas */}
         <div className="d-flex justify-content-between align-items-center">
           <p className="card-text ">
             <small className="">Fecha del comentario: </small>
-            {UseDate(comment.create_at)}
+            {UseDate(comment.created_at)}
           </p>
-          {comment.update_at !== comment.create_at && (
+          {comment.updated_at !== comment.created_at && (
             <p className="card-text">
               <small className="">Fecha de actualización: </small>
-              {UseDate(comment.update_at)}
+              {UseDate(comment.updated_at)}
             </p>
           )}
         </div>

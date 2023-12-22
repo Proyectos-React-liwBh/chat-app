@@ -16,6 +16,7 @@ import CardComment from "../Card/CardComment.jsx";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import DetailsRoom from "./DetailsRoom.jsx";
 import DetailsRoomFull from "./DetailsRoomFull.jsx";
+import ListComments from "./ListComments.jsx";
 
 const Room = () => {
   const dispatch = useDispatch();
@@ -133,24 +134,10 @@ const Room = () => {
             </h3>
 
             <div className="container-chat ">
-              <div className="bg-chat">
-                <div className="box-chat py-4 ">
-                  {data3.map((comment) => (
-                    <div
-                      className={`row py-3 d-flex ${
-                        comment.user.id != userSession.id
-                          ? "justify-content-end"
-                          : "justify-content-start"
-                      }`}
-                      key={comment.id}
-                    >
-                      <div className="col-12 col-md-10 col-lg-8">
-                        <CardComment comment={comment} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              {/* listar comentarios */}
+              <ListComments room_id={id} userSession={userSession} />
+
+              {/* formulario nuevo comentario */}
               <NewComment room={room} />
             </div>
           </section>
