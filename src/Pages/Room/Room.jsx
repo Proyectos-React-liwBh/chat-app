@@ -9,7 +9,6 @@ import { getRoom, cleanAlert } from "../../Redux/RoomSlice";
 import { useParams } from "react-router-dom";
 import {
   SweetAlertError,
-  SweetAlertSuccess,
 } from "../../assets/SweetAlert/SweetAlert";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import DetailsRoom from "./DetailsRoom.jsx";
@@ -38,11 +37,6 @@ const Room = () => {
   useEffect(() => {
     if (errorRedux) {
       SweetAlertError(errorRedux);
-      dispatch(cleanAlert());
-    }
-
-    if (message) {
-      SweetAlertSuccess(message);
       dispatch(cleanAlert());
     }
   }, [errorRedux, message]);

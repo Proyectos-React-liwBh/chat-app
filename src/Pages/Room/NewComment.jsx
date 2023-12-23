@@ -100,7 +100,7 @@ const NewComment = ({ room }) => {
         { color: [true] },
       ],
       ["link", "code-block"],
-      ["emoji"],
+      ["emoji", { 'emoji-shortname': true, 'emoji-toolbar': { compact: true } }],
       ["clean"],
     ],
     "emoji-toolbar": true,

@@ -91,7 +91,9 @@ export const listComments = createAsyncThunk(
 
   async (data) => {
     //console.log(data);
-    const response = await fetch(`http://127.0.0.1:8000/api/comments/${data.room_id}`, {
+    const page = data.page ? data.page : 1;
+
+    const response = await fetch(`http://127.0.0.1:8000/api/comments/${data.room_id}/?page=${page}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

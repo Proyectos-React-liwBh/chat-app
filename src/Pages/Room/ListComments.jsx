@@ -1,9 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useRef } from "react";
-import {
-  SweetAlertError,
-  SweetAlertSuccess,
-} from "../../assets/SweetAlert/SweetAlert";
+import { useEffect, useRef, useState } from "react";
+import { SweetAlertError } from "../../assets/SweetAlert/SweetAlert";
 import CardComment from "../Card/CardComment.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { listComments, cleanAlert } from "../../Redux/CommentSlice";
@@ -11,48 +8,116 @@ import { listComments, cleanAlert } from "../../Redux/CommentSlice";
 const ListComments = ({ room_id, userSession }) => {
   const dispatch = useDispatch();
 
-  const { errorRedux, message, comments } = useSelector(
-    (state) => state.comment
-  );
+  const { errorRedux } = useSelector((state) => state.comment);
   const { token } = useSelector((state) => state.user);
+  const [page, setPage] = useState(1);
+  const [lastId, setLastId] = useState(null);
 
+  const [chatListComments, setChatListComments] = useState([]);
   const refBoxComments = useRef(null);
 
+  //al iniciar la sala obtener los ultimos 20 comentarios
   useEffect(() => {
-    dispatch(listComments({ room_id, token }));
+    dispatch(listComments({ room_id, token })).then((state) => {
+      setChatListComments(state.payload.Comments);
+    });
   }, [room_id, token]);
 
+  //mostra error si lo hay
   useEffect(() => {
     if (errorRedux) {
       SweetAlertError(errorRedux);
       dispatch(cleanAlert());
     }
+  }, [errorRedux]);
 
-    if (message) {
-      SweetAlertSuccess(message);
-      //dispatch(listComments({ room_id, token }));
-      dispatch(cleanAlert());
-    }
-  }, [errorRedux, message]);
-/*
+
   useEffect(() => {
+    const handleScroll = () => {
+      const container = refBoxComments.current;
+      const scrollPosition = container.scrollTop;
+      console.log("Posición del scroll:", scrollPosition);
+      if (scrollPosition === 0) {
+        alert("cargando mas comentarios...");
+        setPage(page + 1);
+        dispatch(listComments({ room_id, token, page })).then((state) => {
+          
+          if(lastId && state.payload.Comments[0].id === lastId){
+            setChatListComments((prevComments) => [
+              ...state.payload.Comments,
+              ...prevComments,
+            ]);
+            setLastId(state.payload.Comments[state.payload.Comments.length-1].id)
+          }else{
+            console.log("no hay mas comentarios")
+          }
+          
+          /* setChatListComments((prevComments) => [
+            ...state.payload.Comments,
+            ...prevComments,
+          ]); */
+        });
+      }
+    };
+
+    const container = refBoxComments.current;
+    container.addEventListener("scroll", handleScroll);
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+
+
+  //hacer scroll hacia abajo al actualizar la lista
+  useEffect(() => {
+    if (!refBoxComments || chatListComments.length === 0) {
+      return;
+    }
     // Hacer scroll hacia abajo al actualizar la lista
     refBoxComments.current.scrollTop = refBoxComments.current.scrollHeight;
-  }, [comments]); */
+  }, [chatListComments]);
 
-   useEffect(() => {
+  useEffect(() => {
     // Conectar al WebSocket al entrar a la sala
     const websocket = new WebSocket(
       `ws://127.0.0.1:8000/ws/comments/${room_id}/`
     );
+
+    websocket.onopen = () => {
+      console.log("Conectado WebSocket");
+    };
 
     // Manejar los mensajes recibidos
     websocket.onmessage = async (e) => {
       let data = await JSON.parse(e.data);
       //console.log(data);
 
-      if (data.comments) {
-        dispatch(listComments({ room_id, token }));
+      switch (data.action) {
+        case "create":
+          //console.log(data.Comment)
+          setChatListComments((prevComments) => [
+            ...prevComments,
+            data.Comment,
+          ]);
+          break;
+        case "update":
+          //console.log(data.Comment)
+          setChatListComments((prevComments) =>
+            prevComments.map((comment) =>
+              comment.id === data.Comment.id ? data.Comment : comment
+            )
+          );
+          break;
+        case "delete":
+          //console.log(data.Comment)
+          setChatListComments((prevComments) =>
+            prevComments.filter((comment) => comment.id !== data.Comment.id)
+          );
+          break;
+        default:
+          break;
       }
     };
 
@@ -69,39 +134,10 @@ const ListComments = ({ room_id, userSession }) => {
     };
   }, [room_id]);
 
-  useEffect(() => {
-    /* if (refBoxComments || comments.length === 0) {
-      return;
-    } */
-    // Hacer scroll hacia abajo al actualizar la lista
-    refBoxComments.current.scrollTop = refBoxComments.current.scrollHeight;
-
-    console.log(refBoxComments.current.scrollTop, refBoxComments.current.scrollHeight)
-    // Mostrar alert si se llega al último comentario
-    const handleScroll = () => {
-      const container = refBoxComments.current;
-      const scrollPosition = container.scrollTop;
-      //const scrollHeight = container.scrollHeight;
-      //const clientHeight = container.clientHeight;
-
-      //console.log(scrollPosition, clientHeight, scrollHeight)
-      if (scrollPosition === 0) {
-        alert("Primer comentario");
-      }
-
-    };
-
-    refBoxComments.current.addEventListener("scroll", handleScroll);
-
-    return () => {
-      refBoxComments.current.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <div className="bg-chat">
       <div className="box-chat py-4 " ref={refBoxComments}>
-        {comments.map((comment) => (
+        {chatListComments.map((comment) => (
           <div
             className={`row py-3 d-flex ${
               comment.user.id != userSession.id
