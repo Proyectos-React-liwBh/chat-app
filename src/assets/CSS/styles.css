@@ -760,6 +760,11 @@ input[type="text"] {
   left: 0% !important;
 }
 
+.text-container-comment p{
+  margin: 0;
+  padding: 0;
+}
+
 /* media query pantallas pequeñas */
 @media (max-width: 400px) {
   .ql-snow .ql-editor{

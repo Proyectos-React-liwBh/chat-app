@@ -62,7 +62,7 @@ const CardComment = ({ comment }) => {
           )}
         </div>
         <div
-          className="card-text py-2"
+          className="card-text py-1 text-container-comment"
           dangerouslySetInnerHTML={{ __html: comment.content }}
         />
 

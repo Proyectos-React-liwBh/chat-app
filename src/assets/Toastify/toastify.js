@@ -1,10 +1,11 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const ToastSuccess = (message) => {
+
+export const ToastSuccess = (message, time=3000) => {
   toast.success(message, {
     position: "bottom-right",
-    autoClose: 3000,
+    autoClose: time,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -14,10 +15,10 @@ export const ToastSuccess = (message) => {
   });
 };
 
-export const ToastError = (message) => {
+export const ToastError = (message, time=3000) => {
   toast.error(message, {
     position: "bottom-right",
-    autoClose: 3000,
+    autoClose: time,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -27,10 +28,10 @@ export const ToastError = (message) => {
   });
 };
 
-export const ToastWarning = (message) => {
+export const ToastWarning = (message, time=3000) => {
   toast.warning(message, {
     position: "bottom-right",
-    autoClose: 3000,
+    autoClose: time,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -40,10 +41,10 @@ export const ToastWarning = (message) => {
   });
 };
 
-export const ToastInfo = (message) => {
+export const ToastInfo = (message, time=3000) => {
   toast.info(message, {
     position: "bottom-right",
-    autoClose: 3000,
+    autoClose: time,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -52,4 +53,3 @@ export const ToastInfo = (message) => {
     theme: "light",
   });
 };
-

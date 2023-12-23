@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import ReactQuill, { Quill } from "react-quill";
-import quillEmoji from "react-quill-emoji";
-import "react-quill-emoji/dist/quill-emoji.css";
+import ReactQuill from "react-quill";
+import { modules, formats } from "../../assets/ReactQuill/ConfigReactQuill";
 import "react-quill/dist/quill.snow.css";
 import ErrorForm from "../../Components/ErrorForm";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,16 +21,6 @@ const NewComment = ({ room }) => {
   const { token } = useSelector((state) => state.user);
   const { loading, commentCurrent } = useSelector((state) => state.comment);
 
-  Quill.register(
-    {
-      "formats/emoji": quillEmoji.EmojiBlot,
-      "modules/emoji-toolbar": quillEmoji.ToolbarEmoji,
-      "modules/emoji-textarea": quillEmoji.TextAreaEmoji,
-      "modules/emoji-shortname": quillEmoji.ShortNameEmoji,
-    },
-    true
-  );
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -45,8 +34,8 @@ const NewComment = ({ room }) => {
       setValidations("El contenido no puede estar vacio!");
       return;
     }
-
-    const cleanedContent = DOMPurify.sanitize(content);
+    
+    const cleanedContent = DOMPurify.sanitize(content.replace(/<p><br\s*\/?><\/p>\s*$/, ""));
     const comment = { content: cleanedContent, room_id: room.id };
 
     //console.log(comment);
@@ -67,6 +56,22 @@ const NewComment = ({ room }) => {
     setContent("");
   };
 
+  const handleClearContent = () => {
+    setContent(""); // Reset the content state
+    dispatch(setCommentCurrent(null));
+  };
+
+  const handlePressEnter = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      //remover de contenten el parrafo vacio
+      const cleanedContent = content.replace(/<p><br\s*\/?><\/p>\s*$/, "");
+      setContent(cleanedContent);
+      //enviar el comentario al servidor
+      handleSubmit(e);
+    }
+  };
+
   useEffect(() => {
     if (validations !== "" && content.trim() !== "") {
       setValidations("");
@@ -81,56 +86,6 @@ const NewComment = ({ room }) => {
     //console.log(commentCurrent)
   }, [commentCurrent]);
 
-  const handleClearContent = () => {
-    setContent(""); // Reset the content state
-    dispatch(setCommentCurrent(null));
-  };
-
-  const modules = {
-    toolbar: [
-      [{ font: [] }],
-      [{ size: [] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-        { align: ["right", "center", "justify"] },
-        { color: [true] },
-      ],
-      ["link", "code-block"],
-      ["emoji", { 'emoji-shortname': true, 'emoji-toolbar': { compact: true } }],
-      ["clean"],
-    ],
-    "emoji-toolbar": true,
-    "emoji-textarea": false,
-    "emoji-shortname": true,
-    clipboard: {
-      // toggle to add extra line breaks when pasting HTML:
-      matchVisual: false,
-    },
-  };
-
-  const formats = [
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "align",
-    "color",
-    "emoji",
-    "link",
-    "code-block",
-    "clean",
-  ];
-
   return (
     <div className="row py-3 rounded">
       <form onSubmit={(e) => handleSubmit(e)} className="w-100">
@@ -144,7 +99,7 @@ const NewComment = ({ room }) => {
               formats={formats}
               placeholder="Escribe un comentario..."
               onChange={setContent}
-              required
+              onKeyDown={handlePressEnter}
             />
 
             <button

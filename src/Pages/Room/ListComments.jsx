@@ -4,22 +4,22 @@ import { SweetAlertError } from "../../assets/SweetAlert/SweetAlert";
 import CardComment from "../Card/CardComment.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { listComments, cleanAlert } from "../../Redux/CommentSlice";
+import { ToastContainer } from "react-toastify";
+import { ToastWarning, ToastSuccess } from "../../assets/Toastify/toastify";
 
 const ListComments = ({ room_id, userSession }) => {
   const dispatch = useDispatch();
 
   const { errorRedux } = useSelector((state) => state.comment);
   const { token } = useSelector((state) => state.user);
-  const [page, setPage] = useState(1);
-  const [lastId, setLastId] = useState(null);
-
+  const [page, setPage] = useState(2);
   const [chatListComments, setChatListComments] = useState([]);
   const refBoxComments = useRef(null);
 
   //al iniciar la sala obtener los ultimos 20 comentarios
   useEffect(() => {
     dispatch(listComments({ room_id, token })).then((state) => {
-      setChatListComments(state.payload.Comments);
+      setChatListComments([...state.payload.Comments.reverse()]);
     });
   }, [room_id, token]);
 
@@ -31,31 +31,38 @@ const ListComments = ({ room_id, userSession }) => {
     }
   }, [errorRedux]);
 
-
   useEffect(() => {
+    if (chatListComments.length === 0) {
+      return;
+    }
+
     const handleScroll = () => {
       const container = refBoxComments.current;
       const scrollPosition = container.scrollTop;
-      console.log("Posición del scroll:", scrollPosition);
+      //console.log("Posición del scroll:", scrollPosition);
       if (scrollPosition === 0) {
-        alert("cargando mas comentarios...");
-        setPage(page + 1);
+        //notificacion de carga
+
         dispatch(listComments({ room_id, token, page })).then((state) => {
-          
-          if(lastId && state.payload.Comments[0].id === lastId){
-            setChatListComments((prevComments) => [
-              ...state.payload.Comments,
-              ...prevComments,
-            ]);
-            setLastId(state.payload.Comments[state.payload.Comments.length-1].id)
-          }else{
-            console.log("no hay mas comentarios")
+          if (
+            state.payload.Comments &&
+            state.payload.Comments[0].id !==
+            chatListComments[chatListComments.length - 1].id
+          ) {
+            ToastSuccess("Cargando comentarios!", 500);
+            setPage((prevPage) => prevPage + 1);
+
+            setTimeout(() => {
+              setChatListComments((prevComments) => [
+                ...[...state.payload.Comments].reverse(),
+                ...prevComments,
+              ]);
+            }, 700);
+          } else {
+            console.log("no hay mas comentarios");
+            ToastWarning("No hay mas comentarios!", 1500);
+            //notificacion de que no hay mas comentarios
           }
-          
-          /* setChatListComments((prevComments) => [
-            ...state.payload.Comments,
-            ...prevComments,
-          ]); */
         });
       }
     };
@@ -66,9 +73,7 @@ const ListComments = ({ room_id, userSession }) => {
     return () => {
       container.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-
+  }, [chatListComments]);
 
   //hacer scroll hacia abajo al actualizar la lista
   useEffect(() => {
@@ -136,6 +141,7 @@ const ListComments = ({ room_id, userSession }) => {
 
   return (
     <div className="bg-chat">
+      <ToastContainer />
       <div className="box-chat py-4 " ref={refBoxComments}>
         {chatListComments.map((comment) => (
           <div
