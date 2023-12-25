@@ -123,7 +123,7 @@ const ModalNewRoom = () => {
                     type="text"
                     id="name"
                     name="name"
-                    placeholder="Ingrese el nombre del categoria"
+                    placeholder="Ingrese el nombre de la sala"
                     autoComplete="off"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -151,7 +151,7 @@ const ModalNewRoom = () => {
                     className="form-control"
                     id="description"
                     name="description"
-                    placeholder="Ingrese la descripción de la categoria"
+                    placeholder="Ingrese la descripción de la sala"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     rows={3}
@@ -170,7 +170,7 @@ const ModalNewRoom = () => {
                 <div className="row mb-3">
                   <label
                     className="form-label fw-bold"
-                    htmlFor="categoriaImagen"
+                    htmlFor="dropzone"
                   >
                     Imagen:
                   </label>

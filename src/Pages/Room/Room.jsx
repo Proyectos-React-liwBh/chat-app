@@ -14,6 +14,7 @@ import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import DetailsRoom from "./DetailsRoom.jsx";
 import DetailsRoomFull from "./DetailsRoomFull.jsx";
 import ListComments from "./ListComments.jsx";
+import useWebSocket from "../../Hooks/UseWebSocket";
 
 const Room = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,17 @@ const Room = () => {
     }
   }, [errorRedux, message]);
 
-  useEffect(() => {
+  const wsUrl = `ws://127.0.0.1:8000/ws/chat/${id}/`;
+
+  const handleWebSocketCounter = (data) => {
+    if (data.user_count) {
+      setUsersCount(data.user_count);
+    }
+  }
+
+  useWebSocket(wsUrl, id, handleWebSocketCounter);
+
+ /*  useEffect(() => {
     // Conectar al WebSocket al entrar a la sala
     const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/${id}/`);
 
@@ -79,7 +90,7 @@ const Room = () => {
       }
     };
   }, [id]);
-
+ */
   return (
     <Layout>
       {room ? (

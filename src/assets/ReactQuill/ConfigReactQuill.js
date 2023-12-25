@@ -6,8 +6,8 @@ Quill.register(
     {
       "formats/emoji": quillEmoji.EmojiBlot,
       "modules/emoji-toolbar": quillEmoji.ToolbarEmoji,
-      "modules/emoji-textarea": quillEmoji.TextAreaEmoji,
       "modules/emoji-shortname": quillEmoji.ShortNameEmoji,
+      //"modules/emoji-textarea": quillEmoji.TextAreaEmoji,
     },
     true
   );
@@ -26,12 +26,12 @@ Quill.register(
         { color: [true] },
       ],
       ["link", "code-block"],
-      ["emoji", { 'emoji-shortname': true, 'emoji-toolbar': { compact: true } }],
+      ["emoji", { 'emoji-toolbar': { compact: true },'emoji-shortname': true,  }],
       ["clean"],
     ],
     "emoji-toolbar": true,
-    "emoji-textarea": false,
     "emoji-shortname": true,
+    //"emoji-textarea": false,
     clipboard: {
       // toggle to add extra line breaks when pasting HTML:
       matchVisual: false,

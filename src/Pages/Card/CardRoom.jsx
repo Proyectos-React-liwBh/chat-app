@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiSolidCircle } from "react-icons/bi";
+import useWebSocket from "../../Hooks/UseWebSocket";
 
 const CardRoom = ({ room }) => {
   const navigate = useNavigate();
@@ -23,7 +24,18 @@ const CardRoom = ({ room }) => {
     }
   }, [room]);
 
-  useEffect(() => {
+  const wsUrl = `ws://127.0.0.1:8000/ws/user_count/${room.id}/`;
+
+  const handleWebSocketCounter = (data) => {
+    if (data.user_count !== undefined) {
+      // eslint-disable-next-line no-unused-vars
+      setUsersCount((prevUsersCount) => data.user_count);
+    }
+  };
+
+  useWebSocket(wsUrl, room.id, handleWebSocketCounter);
+
+  /* useEffect(() => {
     // Conectar al WebSocket al entrar a la sala
     const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/user_count/${room.id}/`);
 
@@ -33,7 +45,7 @@ const CardRoom = ({ room }) => {
 
       console.log(data);
       
-      /* eslint-disable no-unused-vars */
+      //eslint-disable no-unused-vars 
       if (data.user_count !== undefined) {
         setUsersCount(prevUsersCount  => data.user_count);
       }
@@ -44,8 +56,7 @@ const CardRoom = ({ room }) => {
       websocket.close();
       console.log("desconectado socket");
     };
-  }, []);
-
+  }, []); */
 
   return (
     <div className="">
@@ -65,7 +76,9 @@ const CardRoom = ({ room }) => {
                   showDescription ? "d-block" : "d-none"
                 }`}
               >
-                <p className="text-center overflow-y-auto">{room.description}</p>
+                <p className="text-center overflow-y-auto">
+                  {room.description}
+                </p>
               </div>
             </div>
 
@@ -80,8 +93,10 @@ const CardRoom = ({ room }) => {
               </span>
             </div>
 
-            <p className="text-center fw-bold text-muted cursor-pointer"
-             onClick={() => setShowDescription(!showDescription)}>
+            <p
+              className="text-center fw-bold text-muted cursor-pointer"
+              onClick={() => setShowDescription(!showDescription)}
+            >
               Ver descripción...
             </p>
 

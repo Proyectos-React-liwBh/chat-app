@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-export const ToastSuccess = (message, time=3000) => {
+export const ToastSuccess = (message, time=3000, clickFunction = () =>{} ) => {
   toast.success(message, {
     position: "bottom-right",
     autoClose: time,
@@ -12,6 +12,7 @@ export const ToastSuccess = (message, time=3000) => {
     draggable: true,
     progress: undefined,
     theme: "light",
+    onClick: clickFunction,
   });
 };
 
@@ -41,7 +42,7 @@ export const ToastWarning = (message, time=3000) => {
   });
 };
 
-export const ToastInfo = (message, time=3000) => {
+export const ToastInfo = (message, time=3000, clickFunction = () =>{}) => {
   toast.info(message, {
     position: "bottom-right",
     autoClose: time,
@@ -51,5 +52,6 @@ export const ToastInfo = (message, time=3000) => {
     draggable: true,
     progress: undefined,
     theme: "light",
+    onClick: clickFunction,
   });
 };
