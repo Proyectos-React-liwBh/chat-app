@@ -119,6 +119,7 @@ const ListComments = ({ room_id, userSession }) => {
     };
   }, [chatListComments]);
 
+  //websocket
   const handleWebSocketListComments = (data) => {
     switch (data.action) {
       case "create":
@@ -157,76 +158,8 @@ const ListComments = ({ room_id, userSession }) => {
   };
 
   const wsUrl = `ws://127.0.0.1:8000/ws/comments/${room_id}/`;
-
+  
   useWebSocket(wsUrl, room_id, handleWebSocketListComments);
-
-  //websocket
-/*   useEffect(() => {
-    // Conectar al WebSocket al entrar a la sala
-    const websocket = new WebSocket(
-      `ws://127.0.0.1:8000/ws/comments/${room_id}/`
-    );
-
-    websocket.onopen = () => {
-      console.log("Conectado WebSocket");
-    };
-
-    // Manejar los mensajes recibidos
-    websocket.onmessage = async (e) => {
-      let data = await JSON.parse(e.data);
-      //console.log(data);
-
-      switch (data.action) {
-        case "create":
-          //console.log(data.Comment)
-          setChatListComments((prevComments) => [
-            ...prevComments,
-            data.Comment,
-          ]);
-
-          //notificacion de nuevo comentario
-          if (data.Comment.user.id !== userSession.id) {
-            ToastInfo(
-              "Nuevo comentario!, click para ver.",
-              3000,
-              handleScrolDown
-            );
-          } else {
-            handleScrolDown();
-          }
-
-          break;
-        case "update":
-          //console.log(data.Comment)
-          setChatListComments((prevComments) =>
-            prevComments.map((comment) =>
-              comment.id === data.Comment.id ? data.Comment : comment
-            )
-          );
-          break;
-        case "delete":
-          //console.log(data.Comment)
-          setChatListComments((prevComments) =>
-            prevComments.filter((comment) => comment.id !== data.Comment.id)
-          );
-          break;
-        default:
-          break;
-      }
-    };
-
-    // Desconectar el WebSocket al salir de la sala
-    return () => {
-      if (
-        websocket.readyState === WebSocket.OPEN ||
-        websocket.readyState === WebSocket.CONNECTING
-      ) {
-        // Solo cerrar si la conexión está abierta o en proceso de conexión
-        websocket.close();
-        console.log("Desconectado WebSocket");
-      }
-    };
-  }, [room_id]); */
 
   return (
     <div className="bg-chat">

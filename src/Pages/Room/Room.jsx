@@ -42,55 +42,17 @@ const Room = () => {
     }
   }, [errorRedux, message]);
 
+  //socket
   const wsUrl = `ws://127.0.0.1:8000/ws/chat/${id}/`;
 
   const handleWebSocketCounter = (data) => {
     if (data.user_count) {
       setUsersCount(data.user_count);
     }
-  }
+  };
 
   useWebSocket(wsUrl, id, handleWebSocketCounter);
 
- /*  useEffect(() => {
-    // Conectar al WebSocket al entrar a la sala
-    const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/chat/${id}/`);
-
-    // Manejar la apertura de la conexión
-    websocket.onopen = () => {
-      console.log("Conectado WebSocket");
-      // Enviar un mensaje de inicialización con el ID de la sala
-      websocket.send(
-        JSON.stringify({
-          type: "add_user",
-          message: "Nuevo usuario",
-        })
-      );
-    };
-
-    // Manejar los mensajes recibidos
-    websocket.onmessage = async (e) => {
-      let data = await JSON.parse(e.data);
-      //console.log(data);
-
-      if (data.user_count) {
-        setUsersCount(data.user_count);
-      }
-    };
-
-    // Desconectar el WebSocket al salir de la sala
-    return () => {
-      if (
-        websocket.readyState === WebSocket.OPEN ||
-        websocket.readyState === WebSocket.CONNECTING
-      ) {
-        // Solo cerrar si la conexión está abierta o en proceso de conexión
-        websocket.close();
-        console.log("Desconectado WebSocket");
-      }
-    };
-  }, [id]);
- */
   return (
     <Layout>
       {room ? (

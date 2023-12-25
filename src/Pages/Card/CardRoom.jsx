@@ -24,6 +24,7 @@ const CardRoom = ({ room }) => {
     }
   }, [room]);
 
+  //socket
   const wsUrl = `ws://127.0.0.1:8000/ws/user_count/${room.id}/`;
 
   const handleWebSocketCounter = (data) => {
@@ -34,29 +35,6 @@ const CardRoom = ({ room }) => {
   };
 
   useWebSocket(wsUrl, room.id, handleWebSocketCounter);
-
-  /* useEffect(() => {
-    // Conectar al WebSocket al entrar a la sala
-    const websocket = new WebSocket(`ws://127.0.0.1:8000/ws/user_count/${room.id}/`);
-
-    // Manejar los mensajes recibidos
-    websocket.onmessage = async (e) => {
-      let data = await JSON.parse(e.data);
-
-      console.log(data);
-      
-      //eslint-disable no-unused-vars 
-      if (data.user_count !== undefined) {
-        setUsersCount(prevUsersCount  => data.user_count);
-      }
-    };
-
-    // Desconectar el WebSocket al salir de la sala
-    return () => {
-      websocket.close();
-      console.log("desconectado socket");
-    };
-  }, []); */
 
   return (
     <div className="">
