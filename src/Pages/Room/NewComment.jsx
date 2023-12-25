@@ -13,12 +13,14 @@ import {
   setCommentCurrent,
 } from "../../Redux/CommentSlice";
 import DOMPurify from "dompurify";
+import TimerChat from "./TimerChat";
 
 const NewComment = ({ room }) => {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [validations, setValidations] = useState("");
   const { token } = useSelector((state) => state.user);
+  const [comment, setComment] = useState(false);
   const { loading, commentCurrent } = useSelector((state) => state.comment);
 
   const handleSubmit = (e) => {
@@ -34,8 +36,10 @@ const NewComment = ({ room }) => {
       setValidations("El contenido no puede estar vacio!");
       return;
     }
-    
-    const cleanedContent = DOMPurify.sanitize(content.replace(/<p><br\s*\/?><\/p>\s*$/, ""));
+
+    const cleanedContent = DOMPurify.sanitize(
+      content.replace(/<p><br\s*\/?><\/p>\s*$/, "")
+    );
     const comment = { content: cleanedContent, room_id: room.id };
 
     //console.log(comment);
@@ -50,6 +54,7 @@ const NewComment = ({ room }) => {
     } else {
       //enviar el comentario al servidor
       dispatch(createComment({ token, comment }));
+      setComment(true);
     }
 
     //reseteo el valor del textarea
@@ -73,6 +78,14 @@ const NewComment = ({ room }) => {
   };
 
   useEffect(() => {
+    if (comment) {
+      setTimeout(() => {
+        setComment(false);
+      }, 8000);
+    }
+  }, [comment]);
+
+  useEffect(() => {
     if (validations !== "" && content.trim() !== "") {
       setValidations("");
     }
@@ -88,6 +101,9 @@ const NewComment = ({ room }) => {
 
   return (
     <div className="row py-3 rounded">
+      <h5 className="text-center">Nuevo comentario</h5>
+      <hr />
+      {comment && <TimerChat maxMinutes={0} maxSeconds={8} />}
       <form onSubmit={(e) => handleSubmit(e)} className="w-100">
         <div className="pb-5">
           <div className="container-react-quill">

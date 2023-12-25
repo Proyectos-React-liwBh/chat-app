@@ -703,10 +703,6 @@ input[type="text"] {
 
   box-shadow: rgba(21, 21, 21, 1) 0px 7px 29px 0px;
 }
-/* .ql-toolbar {
-  display: flex;
-  justify-content: space-between; 
-} */
 
 .ql-container {
   border-bottom-left-radius: 0.5em;
@@ -809,6 +805,17 @@ input[type="text"] {
     left: 50% !important;
   }
 
+}
+
+.new-comments{
+  transition: all 0.1s ease-in-out;
+}
+
+.new-comments:hover{
+  /* font-weight: 900; */
+  /* font-style: underline; */
+  font-size: 1rem;
+  border-bottom: 2px solid #3399ff;
 }
 
 /* 
