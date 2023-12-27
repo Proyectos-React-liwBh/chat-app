@@ -15,12 +15,19 @@ import {
   SweetAlertSuccess,
 } from "../assets/SweetAlert/SweetAlert";
 import { UseAvatarIcon } from "../Hooks/UseAvatarIcon";
+import {
+  listNotifications,
+  cleanAlert as clearAlertNotifications,
+} from "../Redux/NotificationSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userSession } = useSesion();
   const { message, errorRedux } = useSelector((state) => state.user);
+  const { errorRedux: errorReduxNotification, notifications } = useSelector(
+    (state) => state.notification
+  );
 
   const cerrarSesionUsuario = () => {
     console.log("cerrar sesion");
@@ -31,6 +38,12 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    if (userSession) {
+      dispatch(listNotifications(userSession.token));
+    }
+  }, [userSession]);
+
+  useEffect(() => {
     if (message) {
       SweetAlertSuccess(message);
       dispatch(cleanAlert());
@@ -39,8 +52,12 @@ const Navbar = () => {
       SweetAlertError(errorRedux);
       dispatch(cleanAlert());
     }
+    if (errorReduxNotification) {
+      SweetAlertError(errorReduxNotification);
+      dispatch(clearAlertNotifications());
+    }
     // eslint-disable-next-line
-  }, [message, errorRedux]);
+  }, [message, errorRedux, errorReduxNotification]);
 
   return (
     <div>
@@ -78,6 +95,7 @@ const Navbar = () => {
                   </div>
                 </Link>
               </li>
+
               {/* Notifications */}
               <li className="nav-item dropdown mx-md-2">
                 <div
@@ -90,42 +108,64 @@ const Navbar = () => {
                   <FaBell className="text-white fs-5 bell-container" />
                   {/* Counter - Notificación */}
                   <span className="badge bell-counter rounded-pill badge-notification bg-danger">
-                    3
+                    {notifications.length}
                   </span>
                 </div>
                 {/* Dropdown - Notificación  */}
                 <div
-                  className="dropdown-menu dropdown-menu-end bg-dark bg-gradient"
+                  className="dropdown-menu dropdown-menu-end bg-dark bg-gradient p-2"
                   aria-labelledby="notificationDropdown"
                 >
-                  <h6 className="text-center text-white">
-                    Notificaciones Activas
-                  </h6>
-                  <hr className="dropdown-divider bg-white" />
-                  <ul
-                    className="list-unstyled"
-                    style={{ maxHeight: "240px", overflow: "auto" }}
-                  >
-                    <CardNotification />
-                    <CardNotification />
-                    <CardNotification />
-                  </ul>
-                  {/* <!-- Enlace a pagina de Notificación --> */}
-                  <hr className="dropdown-divider bg-white" />
-                  <Link
-                    to={"/notifications"}
-                    className="dropdown-item text-center small text-white"
-                  >
-                    Mostrar todas las Notificaciones
-                  </Link>
+                  {notifications.length > 0 ? (
+                    <>
+                      <h6 className="text-center text-white">
+                        Notificaciones Activas
+                      </h6>
+                      <hr className="dropdown-divider bg-white" />
+
+                      <ul
+                        className="list-unstyled"
+                        style={{ maxHeight: "240px", overflow: "auto" }}
+                      >
+                        {notifications.map((notification) => (
+                          <CardNotification
+                            key={notification.id}
+                            notification={notification}
+                          />
+                        ))}
+                      </ul>
+
+                      {/* <!-- Enlace a pagina de Notificación --> */}
+                      <hr className="dropdown-divider bg-white" />
+                      <Link
+                        to={"/notifications"}
+                        className="dropdown-item text-center small text-white hover-dark"
+                      >
+                        Mostrar todas las Notificaciones
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <CardNotification />
+                      {/* <p className="dropdown-item text-center text-white small hover-dark mt-2">
+                        No hay Notificaciones Activas
+                      </p> */}
+                    </>
+                  )}
                 </div>
               </li>
               {/* info base de usuario */}
               <li className="nav-item dropdown mx-md-2">
-                <div className="nav-link mx-md-2 d-flex justify-content-evenly align-items-center">
+                <div className="nav-link mx-md-2 d-lg-flex justify-content-evenly align-items-center">
                   {/* icono de avatar */}
                   <div className="me-3">
-                    <img className="img-fluid" width={30} height={30} src={UseAvatarIcon(userSession?.avatar).img} alt="Avatar de usuario" />
+                    <img
+                      className="img-fluid"
+                      width={30}
+                      height={30}
+                      src={UseAvatarIcon(userSession?.avatar).img}
+                      alt="Avatar de usuario"
+                    />
                   </div>
                   {/* Username */}
                   <div className="">

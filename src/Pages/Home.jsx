@@ -11,6 +11,7 @@ import { BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { listAllRooms } from "../Redux/RoomSlice";
 import CardRoom from "./Card/CardRoom";
+import useWebSocket from "../Hooks/UseWebSocket";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,22 @@ const Home = () => {
       });
     }
   }, [token]);
+
+  //websocket
+  const wsUrl = `ws://127.0.0.1:8000/ws/salas/`;
+
+  const handleWebSocketListRooms = (data) => {
+    if (data.action === "create" || data.action === "delete" || data.action === "update") {
+      dispatch(listAllRooms(token)).then((state) => {
+        setListRooms([...state.payload.Rooms]);
+      });
+    }
+
+    console.log("handleWebSocketListRooms", data);
+  };
+
+  useWebSocket(wsUrl, token, handleWebSocketListRooms);
+
 
   return (
     <Layout>

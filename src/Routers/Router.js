@@ -10,6 +10,7 @@ import Profile from "../Pages/Profile/Profile";
 import Forgot from "../Pages/Forgot";
 import Activate from "../Pages/Activate";
 import ChangePassword from "../Pages/ChangePassword";
+import Notifications from "../Pages/Notifications";
 
 //rutas
 export const routerApp = [
@@ -56,6 +57,10 @@ export const routerApp = [
         path: "/profile",
         component: Profile,
     },
+    {
+        path: "/notifications",
+        component: Notifications,
+    }
 ];
 
 
