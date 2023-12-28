@@ -24,8 +24,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userSession } = useSesion();
-  const { message, errorRedux } = useSelector((state) => state.user);
-  const { errorRedux: errorReduxNotification, notifications } = useSelector(
+  const { message, errorRedux, token } = useSelector((state) => state.user);
+  const { errorRedux: errorReduxNotification, message: messageNotification, notifications } = useSelector(
     (state) => state.notification
   );
 
@@ -38,10 +38,10 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (userSession) {
-      dispatch(listNotifications(userSession.token));
+    if (token) {
+      dispatch(listNotifications(token));
     }
-  }, [userSession]);
+  }, [token]);
 
   useEffect(() => {
     if (message) {
@@ -52,12 +52,17 @@ const Navbar = () => {
       SweetAlertError(errorRedux);
       dispatch(cleanAlert());
     }
+    if (messageNotification) {
+      SweetAlertSuccess(messageNotification);
+      dispatch(clearAlertNotifications());
+      dispatch(listNotifications(token));
+    }
     if (errorReduxNotification) {
       SweetAlertError(errorReduxNotification);
       dispatch(clearAlertNotifications());
     }
     // eslint-disable-next-line
-  }, [message, errorRedux, errorReduxNotification]);
+  }, [message, errorRedux, errorReduxNotification,messageNotification]);
 
   return (
     <div>
@@ -146,10 +151,9 @@ const Navbar = () => {
                     </>
                   ) : (
                     <>
-                      <CardNotification />
-                      {/* <p className="dropdown-item text-center text-white small hover-dark mt-2">
+                      <p className="dropdown-item text-center text-white small hover-dark mt-2">
                         No hay Notificaciones Activas
-                      </p> */}
+                      </p>
                     </>
                   )}
                 </div>

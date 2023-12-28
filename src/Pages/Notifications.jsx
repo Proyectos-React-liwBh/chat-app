@@ -1,14 +1,8 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../Components/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  SweetAlertEliminar,
-  SweetAlertError,
-} from "../assets/SweetAlert/SweetAlert";
-import {
-  cleanAlert,
-  listNotifications,
   deleteNotification,
 } from "../Redux/NotificationSlice";
 import { MaterialReactTable } from "material-react-table";
@@ -23,34 +17,17 @@ const Notifications = () => {
   const navigate = useNavigate();
 
   const { token } = useSelector((state) => state.user);
-  const { notifications, errorRedux } = useSelector(
+  const { notifications } = useSelector(
     (state) => state.notification
   );
 
-  useEffect(() => {
-    if (token) {
-      dispatch(listNotifications(token));
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (errorRedux) {
-      SweetAlertError(errorRedux);
-      dispatch(cleanAlert());
-    }
-  }, [errorRedux]);
 
   const handleDelete = (notification) => {
-    SweetAlertEliminar(
-      `¿Estas seguro que quieres eliminar la notificación ${notification.title}?`,
-      () => {
-        dispatch(deleteNotification({ id: notification.id, token }));
-      }
-    );
+    dispatch(deleteNotification({ id: notification.id, token }));
   };
 
   const handleGo = (notification) => {
-    navigate(`/room/${notification.RoomId}`);
+    navigate(`/room/${notification.room.id}`);
   };
 
   const limitDescription = (description) => {
@@ -109,24 +86,24 @@ const Notifications = () => {
               }}
               renderRowActions={({ row }) => (
                 <Box sx={{ display: "flex", gap: "1rem" }}>
-                  <Tooltip arrow placement="left" title="Entrar a sala">
-                    <IconButton
-                      style={{ color: "#276D7A" }}
-                      onClick={() => handleGo(row.original)}
-                    >
-                      <FaEye />
-                    </IconButton>
-                  </Tooltip>
                   {row.original.type === 1 && (
-                    <Tooltip arrow placement="right" title="Eliminar">
+                    <Tooltip arrow placement="left" title="Entrar a sala">
                       <IconButton
-                        color="error"
-                        onClick={() => handleDelete(row.original)}
+                        style={{ color: "#276D7A" }}
+                        onClick={() => handleGo(row.original)}
                       >
-                        <Delete />
+                        <FaEye />
                       </IconButton>
                     </Tooltip>
                   )}
+                  <Tooltip arrow placement="right" title="Eliminar">
+                    <IconButton
+                      color="error"
+                      onClick={() => handleDelete(row.original)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </Tooltip>
                 </Box>
               )}
             />

@@ -379,6 +379,7 @@ const roomSlice = createSlice({
       state.message = "";
     });
     builder.addCase(followRoom.fulfilled, (state, action) => {
+      //console.log(action.payload)
       if (action.payload.message) {
         state.message = action.payload.message;
       } else {

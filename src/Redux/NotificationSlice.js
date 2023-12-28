@@ -5,6 +5,7 @@ export const deleteNotification = createAsyncThunk(
     "notification/deleteNotification",
   
     async (data) => {
+      console.log(data);
       const response = await fetch(
         `http://127.0.0.1:8000/api/notification/${data.id}/`,
         {
@@ -26,11 +27,11 @@ export const listNotifications = createAsyncThunk(
   
     async (data) => {
       //console.log(data);
-      const response = await fetch(`http://127.0.0.1:8000/api/notifications/${data.id}`, {
+      const response = await fetch(`http://127.0.0.1:8000/api/notifications/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${data.token}`,
+          "Authorization": `Bearer ${data}`,
         },
       });
   
@@ -65,6 +66,7 @@ const notificationSlice = createSlice({
       state.message = "";
     });
     builder.addCase(deleteNotification.fulfilled, (state, action) => {
+      console.log(action.payload)
       if (action.payload.message) {
         state.message = action.payload.message;
       } else {
@@ -84,7 +86,7 @@ const notificationSlice = createSlice({
       state.message = "";
     });
     builder.addCase(listNotifications.fulfilled, (state, action) => {
-      //console.log(action.payload)
+      console.log(action.payload)
       if (action.payload.Notifications) {
         state.notifications = [...action.payload.Notifications];
       } else {

@@ -12,6 +12,7 @@ const CardNotification = ({ notification }) => {
   const dispatch = useDispatch();
 
   const handleDelete = (notification) => {
+    console.log(notification)
     dispatch(deleteNotification({ id: notification.id, token }));
   };
 
@@ -21,7 +22,7 @@ const CardNotification = ({ notification }) => {
         <div className="d-flex justify-content-end">
           <MdClose
             className="btn-delete-notification"
-            onClick={() => handleDelete}
+            onClick={()=>handleDelete(notification)}
           />
         </div>
         <span className="small fw-bold">
