@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiSolidCircle } from "react-icons/bi";
 import useWebSocket from "../../Hooks/UseWebSocket";
+import { useSelector } from "react-redux";
 
 const CardRoom = ({ room }) => {
   const navigate = useNavigate();
   const [showDescription, setShowDescription] = useState(false);
 
   const [usersCount, setUsersCount] = useState(0);
+  const { token } = useSelector((state) => state.user);
 
   const limitName = (name) => {
     if (name.length > 20) {
@@ -25,7 +27,7 @@ const CardRoom = ({ room }) => {
   }, [room]);
 
   //socket
-  const wsUrl = `ws://127.0.0.1:8000/ws/user_count/${room.id}/`;
+  const wsUrl = `ws://127.0.0.1:8000/ws/user_count/${room.id}/?token=${token}`;
 
   const handleWebSocketCounter = (data) => {
     if (data.user_count !== undefined) {

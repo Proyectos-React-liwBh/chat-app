@@ -44,7 +44,7 @@ const Home = () => {
   }, [token]);
 
   //websocket
-  const wsUrl = `ws://127.0.0.1:8000/ws/salas/`;
+  const wsUrl = `ws://127.0.0.1:8000/ws/salas/?token=${token}`;
 
   const handleWebSocketListRooms = (data) => {
     if (data.action === "create" || data.action === "delete" || data.action === "update") {

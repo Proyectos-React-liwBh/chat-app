@@ -165,7 +165,7 @@ const ListComments = ({ room_id, userSession }) => {
         break;
     }
   };
-  const wsUrl = `ws://127.0.0.1:8000/ws/comments/${room_id}/`;
+  const wsUrl = `ws://127.0.0.1:8000/ws/comments/${room_id}/?token=${token}`;
   useWebSocket(wsUrl, room_id, handleWebSocketListComments);
 
   return (

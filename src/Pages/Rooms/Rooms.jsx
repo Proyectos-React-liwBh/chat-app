@@ -16,6 +16,8 @@ const Rooms = () => {
     (state) => state.room
   );
 
+  const { notifications } = useSelector((state) => state.notification);
+
   const { token } = useSelector((state) => state.user);
 
   //console.log("token", token);
@@ -26,7 +28,7 @@ const Rooms = () => {
 
       dispatch(getFollowRooms(token));
     }
-  }, [token]);
+  }, [token, notifications]);
 
   useEffect(() => {
     if (message) {

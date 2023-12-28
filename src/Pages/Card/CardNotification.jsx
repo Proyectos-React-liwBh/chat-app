@@ -6,6 +6,7 @@ import { MdOutlineRoomPreferences } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteNotification } from "../../Redux/NotificationSlice";
+import UseDate from "../../hooks/UseDate";
 
 const CardNotification = ({ notification }) => {
   const { token } = useSelector((state) => state.user);
@@ -37,7 +38,7 @@ const CardNotification = ({ notification }) => {
         </span>
         <span className="small">
           <IoCalendarSharp className="text-white me-2" />
-          {notification.created_at}
+          {UseDate(notification.created_at)}
         </span>
       </div>
     </li>

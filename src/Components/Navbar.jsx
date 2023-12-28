@@ -19,6 +19,7 @@ import {
   listNotifications,
   cleanAlert as clearAlertNotifications,
 } from "../Redux/NotificationSlice";
+import useWebSocket from "../Hooks/UseWebSocket";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -63,6 +64,18 @@ const Navbar = () => {
     }
     // eslint-disable-next-line
   }, [message, errorRedux, errorReduxNotification,messageNotification]);
+
+  //socket
+  const wsUrl = `ws://127.0.0.1:8000/ws/notifications/?token=${token}`;
+  
+  const handleWebSocketCounter = (data) => {
+    if (data.action === "update" || data.action === "delete") {
+      dispatch(listNotifications(token));
+    }
+  }
+  
+  useWebSocket(wsUrl,token,handleWebSocketCounter);
+
 
   return (
     <div>

@@ -308,7 +308,7 @@ const roomSlice = createSlice({
       state.message = "";
     });
     builder.addCase(getRoom.fulfilled, (state, action) => {
-      //console.log(action.payload.Room)
+      //console.log(action.payload)
       if (action.payload.Room) {
         state.roomCurrent = { ...action.payload.Room };
       } else {

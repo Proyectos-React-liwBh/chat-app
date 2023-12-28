@@ -40,6 +40,9 @@ const Room = () => {
 
     if (message) {
       SweetAlertSuccess(message);
+      dispatch(getRoom({ token, id })).then((state) => {
+        setRoom({ ...state.payload.Room });
+      });
       dispatch(cleanAlert());
     }
 
@@ -50,7 +53,7 @@ const Room = () => {
   }, [errorRedux, message]);
 
   //socket
-  const wsUrl = `ws://127.0.0.1:8000/ws/chat/${id}/`;
+  const wsUrl = `ws://127.0.0.1:8000/ws/chat/${id}/?token=${token}`;
 
   const handleWebSocketCounter = (data) => {
     if (data.user_count) {
@@ -92,7 +95,7 @@ const Room = () => {
             </div>
 
             {showDetails ? (
-              <DetailsRoomFull room={room} usersCount={usersCount} id={id} />
+              <DetailsRoomFull room={room}  usersCount={usersCount} id={id} />
             ) : (
               <DetailsRoom room={room} usersCount={usersCount} />
             )}

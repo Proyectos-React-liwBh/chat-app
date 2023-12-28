@@ -1,19 +1,24 @@
 /* eslint-disable react/prop-types */
 import { UseAvatarIcon } from "../../Hooks/UseAvatarIcon";
-import UseDate from "../../Hooks/UseDate";
+import UseDate from "../../hooks/UseDate";
 import { TiDocumentText } from "react-icons/ti";
 import { BiSolidCircle } from "react-icons/bi";
 import { MdOutlineLibraryAdd } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
-import { followRoom } from "../../Redux/RoomSlice";
+import { followRoom, unfollowRoom } from "../../Redux/RoomSlice";
+import { IoMdCheckboxOutline } from "react-icons/io";
 
 const DetailsRoomFull = ({ room, usersCount, id }) => {
   const dispatch = useDispatch();
-  
+
   const { token, userSession } = useSelector((state) => state.user);
 
   const handleFollow = () => {
     dispatch(followRoom({ token, id }));
+  };
+
+  const handleDelete = (room) => {
+    dispatch(unfollowRoom({ id: room.id, token }));
   };
 
   return (
@@ -65,13 +70,23 @@ const DetailsRoomFull = ({ room, usersCount, id }) => {
 
               {room.user.id !== userSession.id && (
                 <div className="d-flex align-items-center">
-                  <button
-                    className="btn btn-dark d-flex align-items-center"
-                    onClick={handleFollow}
-                  >
-                    <MdOutlineLibraryAdd className="me-2 fs-5" />
-                    <small>Seguir</small>
-                  </button>
+                  {room.IsFollow ? (
+                    <button
+                      className="btn btn-success d-flex align-items-center"
+                      onClick={() => handleDelete(room)}
+                    >
+                      <IoMdCheckboxOutline className="me-2 fs-5" />
+                      <small>Seguiendo</small>
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-dark d-flex align-items-center"
+                      onClick={handleFollow}
+                    >
+                      <MdOutlineLibraryAdd className="me-2 fs-5" />
+                      <small>Seguir</small>
+                    </button>
+                  )}
                 </div>
               )}
             </div>
