@@ -80,3 +80,8 @@ Principales caracteristicas:
 * URL: https://www.npmjs.com/package/dompurify?activeTab=readme
 * Comandos: 
    - ```npm install dompurify```
+
+   ### JavaScript Cookie
+   * URL: https://www.npmjs.com/package/js-cookie
+   * Comandos: 
+      -```npm i js-cookie```
